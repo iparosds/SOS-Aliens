@@ -1,20 +1,31 @@
 extends Node
 
 var scene_manager: SceneManager
-var current_level
+var level: Level
+var ui: UI
+@onready var patriota = preload("res://scenes/patriota.tscn")
 
-func change_level(level):
-	scene_manager.level.visible = true
-	var new_level = load(level).instantiate()
-	scene_manager.level.add_child(new_level)
-	scene_manager.level.timer.start()
-	scene_manager.ui.main_menu.visible = false
-	scene_manager.ui.label.text = "Bom jogo!"
-	current_level = new_level
+func change_level(load_level):
+	var new_level = load(load_level).instantiate()
+	scene_manager.remove_child(level)
+	scene_manager.add_child(new_level)
 
+func start_level():
+	level.timer.start()
+	level.spawn.start()
+	ui.main_menu.visible = false
+	ui.label.text = "Bom jogo!"
+
+func spawn_patriota():
+	var new_patriota = patriota.instantiate()
+	new_patriota.saida  = level.saida_labirinto.global_position
+	new_patriota.global_position = level.entrada_labirinto.global_position
+	level.add_child(new_patriota)
+	
 func game_over():
-	scene_manager.level.visible = false
-	scene_manager.level.timer.stop()
-	scene_manager.ui.label.text = "Game Over"
-	scene_manager.ui.main_menu.visible = true
-	scene_manager.ui.visible = true
+	print("game_over")
+	level.visible = false
+	level.timer.stop()
+	ui.label.text = "Game Over"
+	ui.main_menu.visible = true
+	ui.visible = true
