@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://42oeppt28feq"]
+[gd_scene load_steps=4 format=3 uid="uid://42oeppt28feq"]
 
 [ext_resource type="Script" uid="uid://bcsw0mt21tpsw" path="res://scripts/ui.gd" id="1_nt7q6"]
+[ext_resource type="VideoStream" uid="uid://dgk38eyn2rgkj" path="res://media/logo-converter.ogv" id="2_x4jx1"]
+[ext_resource type="Theme" uid="uid://cnahmofjehhlg" path="res://assets/themes/default_theme.tres" id="3_yev5y"]
 
 [node name="UI" type="Node2D"]
 script = ExtResource("1_nt7q6")
@@ -17,33 +19,55 @@ text = "Olá mundo"
 
 [node name="main_menu" type="CanvasLayer" parent="."]
 
-[node name="TextureButton" type="TextureButton" parent="main_menu"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ColorRect" type="ColorRect" parent="main_menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0784314, 0.0705882, 0.0901961, 1)
 
-[node name="level_2" type="Button" parent="main_menu"]
-anchors_preset = -1
-anchor_left = 0.451
-anchor_top = 0.426
-anchor_right = 0.451
-anchor_bottom = 0.426
-offset_left = 19.05
-offset_top = 120.2
-offset_right = 81.05
-offset_bottom = 151.2
-text = "Level 2"
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="main_menu"]
+offset_right = 450.0
+offset_bottom = 800.0
+stream = ExtResource("2_x4jx1")
+autoplay = true
+loop = true
 
-[node name="level_1" type="Button" parent="main_menu"]
-anchors_preset = -1
-anchor_left = 0.451
-anchor_top = 0.426
-anchor_right = 0.451
-anchor_bottom = 0.426
-offset_left = 20.05
-offset_top = 152.2
-offset_right = 82.05
-offset_bottom = 183.2
+[node name="MarginContainer" type="MarginContainer" parent="main_menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_yev5y")
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="ButtonVBoxContainer" type="VBoxContainer" parent="main_menu/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="level_1" type="Button" parent="main_menu/MarginContainer/ButtonVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath("../level_2")
+theme_override_font_sizes/font_size = 24
 text = "Level 1"
 
-[connection signal="pressed" from="main_menu/level_2" to="." method="_on_level_2_pressed"]
-[connection signal="pressed" from="main_menu/level_1" to="." method="_on_level_1_pressed"]
+[node name="level_2" type="Button" parent="main_menu/MarginContainer/ButtonVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../level_1")
+focus_neighbor_bottom = NodePath(".")
+theme_override_font_sizes/font_size = 24
+text = "Level 2"
+
+[connection signal="pressed" from="main_menu/MarginContainer/ButtonVBoxContainer/level_1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="main_menu/MarginContainer/ButtonVBoxContainer/level_2" to="." method="_on_level_2_pressed"]

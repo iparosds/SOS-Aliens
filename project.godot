@@ -23,6 +23,7 @@ Controller="*res://scripts/controller.gd"
 
 window/size/viewport_width=450
 window/size/viewport_height=800
+window/stretch/mode="viewport"
 
 [dotnet]
 

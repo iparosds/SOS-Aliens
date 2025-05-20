@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cnahmofjehhlg"]
+
+[ext_resource type="FontFile" uid="uid://cul3qtiyor1u1" path="res://assets/fonts/Early GameBoy.ttf" id="1_sx0q5"]
+
+[resource]
+default_font = ExtResource("1_sx0q5")
+default_font_size = 16
+Button/colors/font_color = Color(0.87451, 0.87451, 0.133333, 1)
+Button/colors/font_focus_color = Color(1, 0.231373, 0.027451, 1)
+Button/colors/font_hover_color = Color(0.0923234, 0.570165, 0.464814, 1)
+Button/colors/font_pressed_color = Color(0.207843, 0.266667, 0.380392, 1)
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = null
+Button/styles/normal = null
