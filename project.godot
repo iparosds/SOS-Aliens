@@ -29,6 +29,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="SOS Aliens"
 
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

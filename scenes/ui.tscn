@@ -2,22 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bcsw0mt21tpsw" path="res://scripts/ui.gd" id="1_nt7q6"]
 [ext_resource type="VideoStream" uid="uid://dgk38eyn2rgkj" path="res://media/logo-converter.ogv" id="2_x4jx1"]
-[ext_resource type="Theme" uid="uid://cnahmofjehhlg" path="res://assets/themes/default_theme.tres" id="3_yev5y"]
+[ext_resource type="Theme" uid="uid://dmhlpo4s3t401" path="res://assets/themes/default_menu_theme.tres" id="3_yev5y"]
 
 [node name="UI" type="Node2D"]
 script = ExtResource("1_nt7q6")
 
-[node name="header" type="CanvasLayer" parent="."]
-
-[node name="Label" type="Label" parent="header"]
-modulate = Color(0, 0, 0, 1)
-offset_left = 161.0
-offset_top = 10.0
-offset_right = 247.0
-offset_bottom = 33.0
-text = "Olá mundo"
-
 [node name="main_menu" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="main_menu"]
 anchors_preset = 15
@@ -34,40 +25,86 @@ stream = ExtResource("2_x4jx1")
 autoplay = true
 loop = true
 
-[node name="MarginContainer" type="MarginContainer" parent="main_menu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="VBoxContainer" type="VBoxContainer" parent="main_menu"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.606
+anchor_right = 0.5
+anchor_bottom = 0.95
+offset_left = -144.0
+offset_right = 144.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_yev5y")
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
 
-[node name="ButtonVBoxContainer" type="VBoxContainer" parent="main_menu/MarginContainer"]
+[node name="LabelMarginContainer" type="MarginContainer" parent="main_menu/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 8
-alignment = 1
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_bottom = 0
 
-[node name="level_1" type="Button" parent="main_menu/MarginContainer/ButtonVBoxContainer"]
+[node name="Label" type="Button" parent="main_menu/VBoxContainer/LabelMarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+text = "choose a city"
+
+[node name="level_1" type="Button" parent="main_menu/VBoxContainer"]
+layout_mode = 2
 focus_neighbor_top = NodePath(".")
-focus_neighbor_bottom = NodePath("../level_2")
-theme_override_font_sizes/font_size = 24
 text = "Level 1"
 
-[node name="level_2" type="Button" parent="main_menu/MarginContainer/ButtonVBoxContainer"]
+[node name="level_2" type="Button" parent="main_menu/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 focus_neighbor_top = NodePath("../level_1")
 focus_neighbor_bottom = NodePath(".")
-theme_override_font_sizes/font_size = 24
 text = "Level 2"
 
-[connection signal="pressed" from="main_menu/MarginContainer/ButtonVBoxContainer/level_1" to="." method="_on_level_1_pressed"]
-[connection signal="pressed" from="main_menu/MarginContainer/ButtonVBoxContainer/level_2" to="." method="_on_level_2_pressed"]
+[node name="SetupMarginContainer" type="MarginContainer" parent="main_menu/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="main_menu/VBoxContainer/SetupMarginContainer"]
+layout_mode = 2
+
+[node name="ConfigButton" type="Button" parent="main_menu/VBoxContainer/SetupMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Configurations"
+
+[node name="Credits" type="Button" parent="main_menu/VBoxContainer/SetupMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Credits"
+
+[node name="level_menu" type="CanvasLayer" parent="."]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="level_menu"]
+offset_right = 450.0
+offset_bottom = 800.0
+stream = ExtResource("2_x4jx1")
+autoplay = true
+loop = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="level_menu"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.606
+anchor_right = 0.5
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_yev5y")
+alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="level_menu/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "Choose a city"
+popup/item_0/id = 0
+popup/item_0/separator = true
+popup/item_1/text = "Level 1"
+popup/item_1/id = 1
+popup/item_2/text = "Level 2"
+popup/item_2/id = 2
+
+[connection signal="pressed" from="main_menu/VBoxContainer/level_1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="main_menu/VBoxContainer/level_2" to="." method="_on_level_2_pressed"]
