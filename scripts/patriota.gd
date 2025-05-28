@@ -2,6 +2,7 @@ class_name Patriota extends CharacterBody2D
 
 @onready var navigation_agent_2d: NavigationAgent2D = $NavigationAgent2D
 @onready var animation_player: AnimatedSprite2D = $AnimationPlayer
+@onready var click_area: Area2D = $ClickArea
 
 # Velocidade de movimentação da barata (pode ser configurada no editor)
 @export var speed: float = 100.0
@@ -13,7 +14,14 @@ var direction: Vector2
 
 func _ready():
 	navigation_agent_2d.target_position = saida
-
+	click_area.input_event.connect(_on_click)
+	
+func _on_click(viewport:Node, event:InputEvent, shape_idx:int):
+	if event is InputEventMouseButton and event.pressed:
+		queue_free()
+	elif event is InputEventScreenTouch and event.pressed:
+		queue_free()
+	
 func _physics_process(delta):
 	# Se o agente já chegou ao destino, remove a barata da cena
 	if navigation_agent_2d.is_navigation_finished():

@@ -3,6 +3,7 @@ extends Node
 var scene_manager: SceneManager
 var level: Level
 var ui: UI
+var camera_2d: Camera2D
 @onready var patriota = preload("res://scenes/patriota.tscn")
 
 func change_level(load_level):
@@ -15,6 +16,7 @@ func start_level():
 	level.spawn.start()
 	ui.main_menu.visible = false
 	ui.label.text = "Bom jogo!"
+	camera_2d.reset_camera()
 
 func spawn_patriota():
 	var new_patriota = patriota.instantiate()

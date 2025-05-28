@@ -7,8 +7,14 @@
 [node name="UI" type="Node2D"]
 script = ExtResource("1_nt7q6")
 
+[node name="header" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="header"]
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
 [node name="main_menu" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="main_menu"]
 anchors_preset = 15
@@ -74,6 +80,7 @@ layout_mode = 2
 text = "Credits"
 
 [node name="level_menu" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="level_menu"]
 offset_right = 450.0

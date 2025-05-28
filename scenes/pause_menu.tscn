@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2kddna8jonj7"]
+[gd_scene load_steps=6 format=3 uid="uid://b2kddna8jonj7"]
 
+[ext_resource type="Script" uid="uid://dd3y451crgmmt" path="res://scripts/pause_menu.gd" id="1_5d2l8"]
 [ext_resource type="Texture2D" uid="uid://d1ar24frbwesc" path="res://media/logo-converter.png" id="2_ewgu5"]
 [ext_resource type="Theme" uid="uid://dmhlpo4s3t401" path="res://assets/themes/default_menu_theme.tres" id="2_kukqi"]
 [ext_resource type="FontFile" uid="uid://cul3qtiyor1u1" path="res://assets/fonts/Early GameBoy.ttf" id="3_ewgu5"]
@@ -11,6 +12,7 @@ font_color = Color(0.690196, 0.866667, 0.486275, 1)
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
+script = ExtResource("1_5d2l8")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 15

@@ -888,7 +888,7 @@ position = Vector2(-22, 298)
 position = Vector2(223, 2)
 
 [node name="Spawn" type="Timer" parent="."]
-wait_time = 0.128
+wait_time = 0.5
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Spawn" to="." method="_on_spawn_timeout"]
