@@ -20,12 +20,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("right"):
 		position.x += CameraPanSpeed
 	if Input.is_action_just_pressed("zoom_in"):
-		print("zoom_in")
-		print(scale)
 		zoom.x += 0.1
 		zoom.y += 0.1
 	if Input.is_action_just_pressed("zoom_out"):
-		print("zoom_in")
-		print(scale)
 		zoom.x -= 0.1
 		zoom.y -= 0.1

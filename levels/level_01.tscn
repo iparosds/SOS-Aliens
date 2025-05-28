@@ -887,6 +887,14 @@ position = Vector2(-22, 298)
 [node name="EntradaLabirinto" type="Node2D" parent="."]
 position = Vector2(223, 2)
 
+[node name="EntradasLabirinto" type="Node" parent="."]
+
+[node name="Rua Lafaete" type="Node2D" parent="EntradasLabirinto"]
+position = Vector2(190, 178)
+
+[node name="Node2D" type="Node2D" parent="EntradasLabirinto"]
+position = Vector2(254, 68)
+
 [node name="Spawn" type="Timer" parent="."]
 wait_time = 0.5
 
