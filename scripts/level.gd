@@ -4,6 +4,7 @@ class_name Level extends Node2D
 @onready var entrada_labirinto: Node2D = $EntradaLabirinto
 @onready var spawn: Timer = $Spawn
 @onready var entradas_labirinto: Node = $EntradasLabirinto
+@onready var saidas_labirinto: Node = $SaidasLabirinto
 
 @export var max_patriotas: int = 10
 

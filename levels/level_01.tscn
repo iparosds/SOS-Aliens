@@ -880,7 +880,7 @@ tile_map_data = PackedByteArray("AAALAAAAAAAIAAcAAAALAAEAAAAIAAgAAAALAAIAAAAIAAk
 tile_set = SubResource("TileSet_81a5f")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.372
+wait_time = 180.0
 
 [node name="SaidaLabirinto" type="Node2D" parent="."]
 position = Vector2(-22, 298)
@@ -891,13 +891,21 @@ position = Vector2(223, 2)
 [node name="EntradasLabirinto" type="Node" parent="."]
 
 [node name="Rua Lafaete" type="Node2D" parent="EntradasLabirinto"]
-position = Vector2(190, 178)
+position = Vector2(194, 21)
 
 [node name="Rua X" type="Node2D" parent="EntradasLabirinto"]
-position = Vector2(254, 68)
+position = Vector2(247, 24)
 
 [node name="Spawn" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="SaidasLabirinto" type="Node" parent="."]
+
+[node name="Saida1" type="Node2D" parent="SaidasLabirinto"]
+position = Vector2(196, 315)
+
+[node name="SAida2" type="Node2D" parent="SaidasLabirinto"]
+position = Vector2(296, 320)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Spawn" to="." method="_on_spawn_timeout"]

@@ -30,15 +30,15 @@ func spawn_patriota():
 		return
 	
 	var entradas = level.entradas_labirinto.get_children()
-	if entradas.size() == 0:
-		print("⚠Nenhuma entrada encontrada")
-		return
+	
+	var saidas = level.saidas_labirinto.get_children()
 	
 	var entrada_random = entradas[randi() % entradas.size()]
+	var saida_random = saidas[randi() % saidas.size()]
 	
 	var new_patriota = patriota.instantiate()
-	new_patriota.saida = level.saida_labirinto.global_position
 	new_patriota.global_position = entrada_random.global_position
+	new_patriota.saida = saida_random.global_position
 	
 	level.add_child(new_patriota)
 	total_patriotas_generated += 1
