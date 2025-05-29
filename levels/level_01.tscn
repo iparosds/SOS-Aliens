@@ -870,7 +870,7 @@ sources/0 = SubResource("TileSetAtlasSource_mckh2")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_mckh2")
-max_patriotas = 20
+max_patriotas = 50
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_mckh2")
@@ -906,6 +906,9 @@ position = Vector2(196, 315)
 
 [node name="SAida2" type="Node2D" parent="SaidasLabirinto"]
 position = Vector2(296, 320)
+
+[node name="SAida3" type="Node2D" parent="SaidasLabirinto"]
+position = Vector2(418, 416)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Spawn" to="." method="_on_spawn_timeout"]
