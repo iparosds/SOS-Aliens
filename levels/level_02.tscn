@@ -506,7 +506,7 @@ tile_map_data = PackedByteArray("AAALAAAAAAAIAAcAAAALAAEAAAAIAAgAAAALAAIAAAAIAAk
 tile_set = SubResource("TileSet_81a5f")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 180.0
+wait_time = 3.0
 
 [node name="Spawn" type="Timer" parent="."]
 wait_time = 0.5

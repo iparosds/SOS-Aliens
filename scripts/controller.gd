@@ -59,16 +59,19 @@ func game_over():
 	print("game_over")
 	level.visible = false
 	level.timer.stop()
+	
 	ui.label.text = "Game Over"
-	ui.main_menu.visible = true
-	ui.visible = true
+	ui.pause_menu.visible = false
+	ui.main_menu.visible = false
+	ui.game_over_menu.visible = true
+	get_tree().paused = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		toggle_pause()
 
 func toggle_pause():
-	if ui.main_menu.visible:
+	if ui.main_menu.visible || ui.game_over_menu.visible:
 		return
 	
 	if ui.is_paused:

@@ -177,6 +177,52 @@ text = "Back to main menu"
 layout_mode = 2
 text = "Quit"
 
+[node name="game_over_menu" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="game_over_menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_wm3ai")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="game_over_menu"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.606
+anchor_right = 0.5
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_yev5y")
+
+[node name="LabelMarginContainer" type="MarginContainer" parent="game_over_menu/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Label" type="Label" parent="game_over_menu/VBoxContainer/LabelMarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.713726, 0.180392, 0.207843, 1)
+theme_override_font_sizes/font_size = 32
+text = "game over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button_Retry" type="Button" parent="game_over_menu/VBoxContainer"]
+layout_mode = 2
+text = "Retry
+"
+
+[node name="Button_Back_To_Main_menu" type="Button" parent="game_over_menu/VBoxContainer"]
+layout_mode = 2
+text = "Back to main menu"
+
+[node name="Button_Quit_From_Game_Over" type="Button" parent="game_over_menu/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
 [connection signal="pressed" from="main_menu/VBoxContainer/level_1" to="." method="_on_level_1_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/level_2" to="." method="_on_level_2_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/SetupMarginContainer/VBoxContainer/Button_Quit_From_Main_Menu" to="." method="_on_button_quit_from_main_menu_pressed"]
@@ -184,3 +230,6 @@ text = "Quit"
 [connection signal="pressed" from="pause_menu/VBoxContainer/Button_Restart" to="." method="_on_button_restart_pressed"]
 [connection signal="pressed" from="pause_menu/VBoxContainer/Button_Back_To_Menu" to="." method="_on_button_back_to_menu_pressed"]
 [connection signal="pressed" from="pause_menu/VBoxContainer/Button_Quit" to="." method="_on_button_quit_pressed"]
+[connection signal="pressed" from="game_over_menu/VBoxContainer/Button_Retry" to="." method="_on_button_retry_pressed"]
+[connection signal="pressed" from="game_over_menu/VBoxContainer/Button_Back_To_Main_menu" to="." method="_on_button_back_to_main_menu_pressed"]
+[connection signal="pressed" from="game_over_menu/VBoxContainer/Button_Quit_From_Game_Over" to="." method="_on_button_quit_from_game_over_pressed"]
