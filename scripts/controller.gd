@@ -68,6 +68,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_pause()
 
 func toggle_pause():
+	if ui.main_menu.visible:
+		return
+	
 	if ui.is_paused:
 		ui.hide_pause_menu()
 	else:
