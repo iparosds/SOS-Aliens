@@ -496,6 +496,7 @@ sources/0 = SubResource("TileSetAtlasSource_mckh2")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_g685p")
+max_patriotas = 100
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_g685p")
@@ -505,16 +506,32 @@ tile_map_data = PackedByteArray("AAALAAAAAAAIAAcAAAALAAEAAAAIAAgAAAALAAIAAAAIAAk
 tile_set = SubResource("TileSet_81a5f")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
-
-[node name="SaidaLabirinto" type="Node2D" parent="."]
-position = Vector2(229, 295)
-
-[node name="EntradaLabirinto" type="Node2D" parent="."]
-position = Vector2(231, 52)
+wait_time = 180.0
 
 [node name="Spawn" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="EntradasLabirinto" type="Node" parent="."]
+
+[node name="Rua Lafaete" type="Node2D" parent="EntradasLabirinto"]
+position = Vector2(32, 22)
+
+[node name="Rua X" type="Node2D" parent="EntradasLabirinto"]
+position = Vector2(396, 24)
+
+[node name="Rua X2" type="Node2D" parent="EntradasLabirinto"]
+position = Vector2(217, 32)
+
+[node name="SaidasLabirinto" type="Node" parent="."]
+
+[node name="Saida1" type="Node2D" parent="SaidasLabirinto"]
+position = Vector2(41, 658)
+
+[node name="SAida2" type="Node2D" parent="SaidasLabirinto"]
+position = Vector2(247, 599)
+
+[node name="SAida3" type="Node2D" parent="SaidasLabirinto"]
+position = Vector2(404, 765)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Spawn" to="." method="_on_spawn_timeout"]

@@ -882,12 +882,6 @@ tile_set = SubResource("TileSet_81a5f")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 180.0
 
-[node name="SaidaLabirinto" type="Node2D" parent="."]
-position = Vector2(-22, 298)
-
-[node name="EntradaLabirinto" type="Node2D" parent="."]
-position = Vector2(223, 2)
-
 [node name="EntradasLabirinto" type="Node" parent="."]
 
 [node name="Rua Lafaete" type="Node2D" parent="EntradasLabirinto"]
