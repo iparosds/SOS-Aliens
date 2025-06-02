@@ -127,3 +127,7 @@ shape = SubResource("CapsuleShape2D_ncut4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_d71mh")
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true

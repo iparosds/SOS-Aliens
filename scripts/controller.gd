@@ -52,8 +52,19 @@ func spawn_patriota():
 	new_patriota.global_position = entrada_random.global_position
 	new_patriota.saida = saida_random.global_position
 	
+	# Conecta o sinal para tocar o som
+	new_patriota.clicked.connect(_on_patriota_clicked)
+	
 	level.add_child(new_patriota)
 	total_patriotas_generated += 1
+
+
+func _on_patriota_clicked():
+	if ui and ui.get_node("SoundPlayer/RayShotSound"):
+		var sfx = ui.get_node("SoundPlayer/RayShotSound")
+		sfx.stop()
+		sfx.play()
+
 
 func game_over():
 	print("game_over")
