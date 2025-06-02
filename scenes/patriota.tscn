@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://cfswyscqgpdgg"]
+[gd_scene load_steps=19 format=3 uid="uid://cfswyscqgpdgg"]
 
 [ext_resource type="Texture2D" uid="uid://njx778gx1gm1" path="res://media/patriota.png" id="1_6t5ub"]
 [ext_resource type="Script" uid="uid://ciwaxbcetof32" path="res://scripts/patriota.gd" id="1_d71mh"]
+[ext_resource type="PackedScene" uid="uid://gjmoni0760v6" path="res://scenes/DeathParticles.tscn" id="2_lh51e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d71mh"]
 atlas = ExtResource("1_6t5ub")
@@ -111,6 +112,7 @@ height = 26.0
 [node name="Patriota" type="CharacterBody2D"]
 collision_mask = 17
 script = ExtResource("1_d71mh")
+deathParticle = ExtResource("2_lh51e")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
@@ -127,7 +129,3 @@ shape = SubResource("CapsuleShape2D_ncut4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_d71mh")
-
-[node name="KillTimer" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true

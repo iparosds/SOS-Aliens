@@ -228,7 +228,8 @@ text = "Quit"
 
 [node name="RayShotSound" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource("6_8dubc")
-volume_db = 3.0
+volume_db = 2.0
+bus = &"SFX"
 
 [connection signal="pressed" from="main_menu/VBoxContainer/level_1" to="." method="_on_level_1_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/level_2" to="." method="_on_level_2_pressed"]
