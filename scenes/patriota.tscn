@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://cfswyscqgpdgg"]
 
-[ext_resource type="Texture2D" uid="uid://njx778gx1gm1" path="res://media/patriota.png" id="1_6t5ub"]
+[ext_resource type="Texture2D" uid="uid://njx778gx1gm1" path="res://assets/media/images/patriota.png" id="1_6t5ub"]
 [ext_resource type="Script" uid="uid://ciwaxbcetof32" path="res://scripts/patriota.gd" id="1_d71mh"]
 [ext_resource type="PackedScene" uid="uid://gjmoni0760v6" path="res://scenes/DeathParticles.tscn" id="2_lh51e"]
 

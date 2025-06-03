@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=4 uid="uid://d3w1e0xaquuqx"]
 
 [ext_resource type="Script" uid="uid://cq6hvd85q87qa" path="res://scripts/level.gd" id="1_g685p"]
-[ext_resource type="Texture2D" uid="uid://c8so6h2ldkd2c" path="res://media/tileset.jpeg" id="1_nnn84"]
+[ext_resource type="Texture2D" uid="uid://c8so6h2ldkd2c" path="res://assets/media/images/tileset.jpeg" id="1_nnn84"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_g685p"]
 vertices = PackedVector2Array(525.039, 877.82, -222.969, 865.18, -127.953, -90, 528.961, -90)

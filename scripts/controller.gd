@@ -14,6 +14,8 @@ var current_level_path: String
 func change_level(load_level):
 	var new_level = load(load_level).instantiate()
 	
+	ui.sound_track.play(0.0)
+	
 	if level:
 		scene_manager.remove_child(level)
 	

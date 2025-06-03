@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://42oeppt28feq"]
+[gd_scene load_steps=9 format=3 uid="uid://42oeppt28feq"]
 
 [ext_resource type="Script" uid="uid://bcsw0mt21tpsw" path="res://scripts/ui.gd" id="1_nt7q6"]
-[ext_resource type="VideoStream" uid="uid://dgk38eyn2rgkj" path="res://media/logo-converter.ogv" id="2_x4jx1"]
+[ext_resource type="VideoStream" uid="uid://dgk38eyn2rgkj" path="res://assets/media/videos/logo-converter.ogv" id="2_x4jx1"]
 [ext_resource type="Theme" uid="uid://dmhlpo4s3t401" path="res://assets/themes/default_menu_theme.tres" id="3_yev5y"]
-[ext_resource type="Texture2D" uid="uid://d1ar24frbwesc" path="res://media/logo-converter.png" id="4_wm3ai"]
+[ext_resource type="Texture2D" uid="uid://d1ar24frbwesc" path="res://assets/media/images/logo-converter.png" id="4_wm3ai"]
 [ext_resource type="FontFile" uid="uid://cul3qtiyor1u1" path="res://assets/fonts/Early GameBoy.ttf" id="5_8dubc"]
-[ext_resource type="AudioStream" uid="uid://dgqbkuj0fjeih" path="res://media/ray_shot.mp3" id="6_8dubc"]
+[ext_resource type="AudioStream" uid="uid://dgqbkuj0fjeih" path="res://assets/media/sounds/ray_shot.mp3" id="6_8dubc"]
+[ext_resource type="AudioStream" uid="uid://ba22vcqxc4evk" path="res://assets/media/sounds/gameplay music loop.mp3" id="7_p7vwb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p7vwb"]
 font = ExtResource("5_8dubc")
@@ -228,8 +229,12 @@ text = "Quit"
 
 [node name="RayShotSound" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource("6_8dubc")
-volume_db = 2.0
+volume_db = -5.0
 bus = &"SFX"
+
+[node name="SoundTrack" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource("7_p7vwb")
+volume_db = -15.0
 
 [connection signal="pressed" from="main_menu/VBoxContainer/level_1" to="." method="_on_level_1_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/level_2" to="." method="_on_level_2_pressed"]

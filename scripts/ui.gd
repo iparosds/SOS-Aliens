@@ -6,11 +6,14 @@ class_name UI extends Node2D
 @onready var level_menu: CanvasLayer = $level_menu
 @onready var pause_menu: CanvasLayer = $pause_menu
 @onready var game_over_menu: CanvasLayer = $game_over_menu
+@onready var sound_track: AudioStreamPlayer = $SoundPlayer/SoundTrack
 
 var is_paused: bool = false
 
 func _ready():
 	Controller.ui = self
+	sound_track.process_mode = Node.PROCESS_MODE_ALWAYS
+	sound_track.play()
 	pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	hide_pause_menu()
 	game_over_menu.visible = false

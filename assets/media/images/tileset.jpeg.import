@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://njx778gx1gm1"
-path="res://.godot/imported/patriota.png-9d441ea8a66a59949562da418bc66a3f.ctex"
+uid="uid://c8so6h2ldkd2c"
+path="res://.godot/imported/tileset.jpeg-ccd333e866f267ff447365145e0b98c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://media/patriota.png"
-dest_files=["res://.godot/imported/patriota.png-9d441ea8a66a59949562da418bc66a3f.ctex"]
+source_file="res://assets/media/images/tileset.jpeg"
+dest_files=["res://.godot/imported/tileset.jpeg-ccd333e866f267ff447365145e0b98c5.ctex"]
 
 [params]
 
