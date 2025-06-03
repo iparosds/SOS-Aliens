@@ -62,11 +62,18 @@ func spawn_patriota():
 
 
 func _on_patriota_clicked():
-	if ui and ui.get_node("SoundPlayer/RayShotSound"):
-		var sfx = ui.get_node("SoundPlayer/RayShotSound")
-		sfx.stop()
-		sfx.play()
-
+	if ui:
+		var ray_shot = AudioStreamPlayer.new()
+		ray_shot.stream = preload("res://assets/media/sounds/ray_shot.mp3")
+		ray_shot.volume_db = -6
+		ray_shot.bus = "SFX"
+		ray_shot.autoplay = false
+		ui.get_node("SoundPlayer").add_child(ray_shot)
+		
+		ray_shot.play()
+		
+		# Remove automaticamente quando terminar
+		ray_shot.finished.connect(func(): ray_shot.queue_free())
 
 func game_over():
 	print("game_over")
