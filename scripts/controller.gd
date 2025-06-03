@@ -54,7 +54,6 @@ func spawn_patriota():
 	new_patriota.global_position = entrada_random.global_position
 	new_patriota.saida = saida_random.global_position
 	
-	# Conecta o sinal para tocar o som
 	new_patriota.clicked.connect(_on_patriota_clicked)
 	
 	level.add_child(new_patriota)
@@ -72,7 +71,7 @@ func _on_patriota_clicked():
 		
 		ray_shot.play()
 		
-		# Remove automaticamente quando terminar
+		# Remove quando terminar
 		ray_shot.finished.connect(func(): ray_shot.queue_free())
 
 func game_over():

@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://42oeppt28feq"]
+[gd_scene load_steps=10 format=3 uid="uid://42oeppt28feq"]
 
 [ext_resource type="Script" uid="uid://bcsw0mt21tpsw" path="res://scripts/ui.gd" id="1_nt7q6"]
+[ext_resource type="VideoStream" uid="uid://bbup00575hgcg" path="res://assets/media/videos/patriotas_final_1.ogv" id="2_p7vwb"]
 [ext_resource type="VideoStream" uid="uid://dgk38eyn2rgkj" path="res://assets/media/videos/logo-converter.ogv" id="2_x4jx1"]
+[ext_resource type="VideoStream" uid="uid://clxihlwv16a7y" path="res://assets/media/videos/nave_final_1.ogv" id="3_ktti3"]
 [ext_resource type="Theme" uid="uid://dmhlpo4s3t401" path="res://assets/themes/default_menu_theme.tres" id="3_yev5y"]
 [ext_resource type="Texture2D" uid="uid://d1ar24frbwesc" path="res://assets/media/images/logo-converter.png" id="4_wm3ai"]
 [ext_resource type="FontFile" uid="uid://cul3qtiyor1u1" path="res://assets/fonts/Early GameBoy.ttf" id="5_8dubc"]
@@ -14,6 +16,51 @@ font_color = Color(0.690196, 0.866667, 0.486275, 1)
 
 [node name="UI" type="Node2D"]
 script = ExtResource("1_nt7q6")
+
+[node name="intro_container" type="CanvasLayer" parent="."]
+
+[node name="intro1" type="VideoStreamPlayer" parent="intro_container"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stream = ExtResource("2_p7vwb")
+
+[node name="intro2" type="VideoStreamPlayer" parent="intro_container"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stream = ExtResource("3_ktti3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="intro_container"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -56.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_vertical = 4
+theme = ExtResource("3_yev5y")
+
+[node name="SetupMarginContainer" type="MarginContainer" parent="intro_container/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="SkipIntroButton" type="Button" parent="intro_container/VBoxContainer/SetupMarginContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.690196, 0.866667, 0.486275, 1)
+text = "Skip"
 
 [node name="header" type="CanvasLayer" parent="."]
 
@@ -230,6 +277,7 @@ text = "Quit"
 stream = ExtResource("7_p7vwb")
 volume_db = -15.0
 
+[connection signal="pressed" from="intro_container/VBoxContainer/SetupMarginContainer/SkipIntroButton" to="." method="_on_skip_intro_button_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/level_1" to="." method="_on_level_1_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/level_2" to="." method="_on_level_2_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/SetupMarginContainer/VBoxContainer/Button_Quit_From_Main_Menu" to="." method="_on_button_quit_from_main_menu_pressed"]
