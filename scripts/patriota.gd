@@ -42,24 +42,14 @@ func _physics_process(delta):
 	move_and_slide()
 
 ## Freeze e delay antes de explodir.
-#func kill():
-	#animation_player.stop()
-	#click_area.set_deferred("disabled", true)  # evita múltiplos cliques
-	#set_physics_process(false)
-#
-	#await get_tree().create_timer(0.4).timeout
-#
-	#var _particle = deathParticle.instantiate()
-	#_particle.global_position = global_position
-	#_particle.rotation = direction.angle()
-	#_particle.emitting = true
-	#get_tree().current_scene.add_child(_particle)
-#
-	#queue_free()
-
-
 func kill():
 	var _particle = deathParticle.instantiate()
+	animation_player.stop()
+	click_area.set_deferred("disabled", true)  # evita múltiplos cliques
+	set_physics_process(false)
+
+	await get_tree().create_timer(0.15).timeout
+
 	_particle.global_position = global_position
 	_particle.rotation = direction.angle()
 	_particle.emitting = true
@@ -67,5 +57,15 @@ func kill():
 
 	queue_free()
 
-	await get_tree().create_timer(0.4).timeout
-	_particle.queue_free()
+
+#func kill():
+	#var _particle = deathParticle.instantiate()
+	#_particle.global_position = global_position
+	#_particle.rotation = direction.angle()
+	#_particle.emitting = true
+	#get_tree().current_scene.add_child(_particle)
+#
+	#queue_free()
+#
+	#await get_tree().create_timer(0.4).timeout
+	#_particle.queue_free()
