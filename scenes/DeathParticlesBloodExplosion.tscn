@@ -1,4 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://fujfyhn35jrl"]
+[gd_scene load_steps=7 format=3 uid="uid://fujfyhn35jrl"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3truk"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
 [sub_resource type="Gradient" id="Gradient_1sqc3"]
 offsets = PackedFloat32Array(0.541958, 1)
@@ -18,17 +24,19 @@ curve = SubResource("Curve_4maip")
 direction = Vector3(0, 0, 0)
 spread = 180.0
 initial_velocity_min = 50.0
-initial_velocity_max = 100.0
+initial_velocity_max = 50.0
 gravity = Vector3(0, 0, 0)
 scale_min = 10.0
 scale_max = 10.5
 scale_curve = SubResource("CurveTexture_ifise")
 color_ramp = SubResource("GradientTexture1D_2ptj6")
 
-[node name="DeathParticles" type="GPUParticles2D"]
+[node name="DeathParticlesBloodExplosion" type="GPUParticles2D"]
 self_modulate = Color(0.670588, 0, 0, 1)
+material = SubResource("CanvasItemMaterial_3truk")
 emitting = false
-amount = 50
+amount = 25
+lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
 visibility_rect = Rect2(0, 0, 0, 0)

@@ -1,4 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://gjmoni0760v6"]
+[gd_scene load_steps=8 format=3 uid="uid://gjmoni0760v6"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8fun0"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
 [sub_resource type="CurveTexture" id="CurveTexture_8fun0"]
 
@@ -32,8 +38,10 @@ turbulence_noise_scale = 0.0
 turbulence_initial_displacement_min = -100.0
 turbulence_initial_displacement_max = 97.2
 
-[node name="DeathParticles" type="GPUParticles2D"]
+[node name="DeathParticlesRayExplosion" type="GPUParticles2D"]
 self_modulate = Color(0.192157, 0.933333, 0, 1)
+z_index = 1
+material = SubResource("CanvasItemMaterial_8fun0")
 emitting = false
 amount = 50
 lifetime = 0.4

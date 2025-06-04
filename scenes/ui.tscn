@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://42oeppt28feq"]
+[gd_scene load_steps=11 format=3 uid="uid://42oeppt28feq"]
 
 [ext_resource type="Script" uid="uid://bcsw0mt21tpsw" path="res://scripts/ui.gd" id="1_nt7q6"]
 [ext_resource type="VideoStream" uid="uid://bbup00575hgcg" path="res://assets/media/videos/patriotas_final_1.ogv" id="2_p7vwb"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d1ar24frbwesc" path="res://assets/media/images/logo-converter.png" id="4_wm3ai"]
 [ext_resource type="FontFile" uid="uid://cul3qtiyor1u1" path="res://assets/fonts/Early GameBoy.ttf" id="5_8dubc"]
 [ext_resource type="AudioStream" uid="uid://ba22vcqxc4evk" path="res://assets/media/sounds/gameplay music loop.mp3" id="7_p7vwb"]
+[ext_resource type="AudioStream" uid="uid://c8hyvkpshd7vb" path="res://assets/media/sounds/pop-fx_G_major.wav" id="9_cgfq5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p7vwb"]
 font = ExtResource("5_8dubc")
@@ -276,6 +277,11 @@ text = "Quit"
 [node name="SoundTrack" type="AudioStreamPlayer" parent="SoundPlayer"]
 stream = ExtResource("7_p7vwb")
 volume_db = -15.0
+
+[node name="RayShot" type="AudioStreamPlayer" parent="SoundPlayer"]
+stream = ExtResource("9_cgfq5")
+volume_db = -6.0
+bus = &"SFX"
 
 [connection signal="pressed" from="intro_container/VBoxContainer/SetupMarginContainer/SkipIntroButton" to="." method="_on_skip_intro_button_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/level_1" to="." method="_on_level_1_pressed"]

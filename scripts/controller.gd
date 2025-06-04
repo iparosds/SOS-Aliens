@@ -14,8 +14,6 @@ var current_level_path: String
 func change_level(load_level):
 	var new_level = load(load_level).instantiate()
 	
-	ui.sound_track.play(0.0)
-	
 	if level:
 		scene_manager.remove_child(level)
 	
@@ -54,25 +52,10 @@ func spawn_patriota():
 	new_patriota.global_position = entrada_random.global_position
 	new_patriota.saida = saida_random.global_position
 	
-	new_patriota.clicked.connect(_on_patriota_clicked)
 	
 	level.add_child(new_patriota)
 	total_patriotas_generated += 1
 
-
-func _on_patriota_clicked():
-	if ui:
-		var ray_shot = AudioStreamPlayer.new()
-		ray_shot.stream = preload("res://assets/media/sounds/ray_shot.mp3")
-		ray_shot.volume_db = -6
-		ray_shot.bus = "SFX"
-		ray_shot.autoplay = false
-		ui.get_node("SoundPlayer").add_child(ray_shot)
-		
-		ray_shot.play()
-		
-		# Remove quando terminar
-		ray_shot.finished.connect(func(): ray_shot.queue_free())
 
 func game_over():
 	print("game_over")
@@ -85,9 +68,26 @@ func game_over():
 	ui.game_over_menu.visible = true
 	get_tree().paused = false
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		toggle_pause()
+	
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			var click_position = get_viewport().get_camera_2d().get_global_mouse_position()
+			
+			# Primeiro: dispara o som do tiro
+			if ui:
+				ui.ray_shot.stop()
+				ui.ray_shot.play()
+			
+			# Instancia explosão onde o jogador clicou
+			var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn").instantiate()
+			particle.global_position = click_position
+			particle.emitting = true
+			get_tree().current_scene.add_child(particle)
+
 
 func toggle_pause():
 	if ui.main_menu.visible || ui.game_over_menu.visible:
