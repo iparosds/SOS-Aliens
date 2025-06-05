@@ -10,6 +10,7 @@ var max_patriotas_by_level := 0
 var current_level_path: String
 
 @onready var patriota = preload("res://scenes/patriota.tscn")
+@onready var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn")
 
 func change_level(load_level):
 	var new_level = load(load_level).instantiate()
@@ -79,14 +80,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			# Primeiro: dispara o som do tiro
 			if ui:
-				ui.ray_shot.stop()
 				ui.ray_shot.play()
 			
 			# Instancia explosão onde o jogador clicou
-			var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn").instantiate()
-			particle.global_position = click_position
-			particle.emitting = true
-			get_tree().current_scene.add_child(particle)
+			var new_particle = particle.instantiate()
+			new_particle.global_position = click_position
+			new_particle.emitting = true
+			get_tree().current_scene.add_child(new_particle)
 
 
 func toggle_pause():

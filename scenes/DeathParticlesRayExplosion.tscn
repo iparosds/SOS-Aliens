@@ -1,4 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://gjmoni0760v6"]
+[gd_scene load_steps=9 format=3 uid="uid://gjmoni0760v6"]
+
+[ext_resource type="Script" uid="uid://cg03dwtooxmn7" path="res://scripts/death_particles.gd" id="1_4mffy"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8fun0"]
 particles_animation = true
@@ -43,9 +45,12 @@ self_modulate = Color(0.192157, 0.933333, 0, 1)
 z_index = 1
 material = SubResource("CanvasItemMaterial_8fun0")
 emitting = false
-amount = 50
-lifetime = 0.4
+amount = 20
+lifetime = 0.2
 one_shot = true
 explosiveness = 1.0
 visibility_rect = Rect2(0, 0, 0, 0)
 process_material = SubResource("ParticleProcessMaterial_nqips")
+script = ExtResource("1_4mffy")
+
+[connection signal="finished" from="." to="." method="_on_finished"]
