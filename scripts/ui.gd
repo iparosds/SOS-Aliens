@@ -6,7 +6,6 @@ class_name UI extends Node2D
 @onready var level_menu: CanvasLayer = $level_menu
 @onready var pause_menu: CanvasLayer = $pause_menu
 @onready var game_over_menu: CanvasLayer = $game_over_menu
-@onready var sound_track: AudioStreamPlayer = $SoundPlayer/SoundTrack
 @onready var ray_shot: AudioStreamPlayer = $SoundPlayer/RayShot
 @onready var intro_container: CanvasLayer = $intro_container
 @onready var intro_1: VideoStreamPlayer = $intro_container/intro1
@@ -30,8 +29,6 @@ func _ready():
 	intro_1.play()
 	intro_1.connect("finished", Callable(self, "_on_intro_1_finished"))
 	
-	sound_track.process_mode = Node.PROCESS_MODE_ALWAYS
-	sound_track.play()
 
 ## Intro
 func _on_intro_1_finished():

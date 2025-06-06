@@ -79,8 +79,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			
 			# Primeiro: dispara o som do tiro
 			if ui:
-				ui.ray_shot.stop()
-				ui.ray_shot.play()
+				scene_manager.ray_shot.play()
 			
 			# Instancia explosão onde o jogador clicou
 			var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn").instantiate()
