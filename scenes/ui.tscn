@@ -97,25 +97,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_yev5y")
 
-[node name="LabelMarginContainer" type="MarginContainer" parent="main_menu/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_bottom = 0
-
-[node name="Label" type="Button" parent="main_menu/VBoxContainer/LabelMarginContainer"]
+[node name="ChooseLevelButton" type="Button" parent="main_menu/VBoxContainer"]
 layout_mode = 2
 text = "choose a city"
-
-[node name="level_1" type="Button" parent="main_menu/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_top = NodePath(".")
-text = "Level 1"
-
-[node name="level_2" type="Button" parent="main_menu/VBoxContainer"]
-layout_mode = 2
-focus_neighbor_top = NodePath("../level_1")
-focus_neighbor_bottom = NodePath(".")
-text = "Level 2"
 
 [node name="SetupMarginContainer" type="MarginContainer" parent="main_menu/VBoxContainer"]
 layout_mode = 2
@@ -140,6 +124,14 @@ text = "Quit"
 [node name="level_menu" type="CanvasLayer" parent="."]
 visible = false
 
+[node name="ColorRect" type="ColorRect" parent="level_menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.190762, 0.190762, 0.190762, 1)
+
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="level_menu"]
 offset_right = 450.0
 offset_bottom = 800.0
@@ -147,31 +139,35 @@ stream = ExtResource("2_x4jx1")
 autoplay = true
 loop = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="level_menu"]
+[node name="ScrollContainer" type="ScrollContainer" parent="level_menu"]
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.606
-anchor_right = 0.5
+anchor_left = 0.1
+anchor_top = 0.625
+anchor_right = 0.9
 anchor_bottom = 0.95
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="level_menu/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="level_menu/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("3_yev5y")
 alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="level_menu/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-selected = 0
-item_count = 3
-popup/item_0/text = "Choose a city"
-popup/item_0/id = 0
-popup/item_0/separator = true
-popup/item_1/text = "Level 1"
-popup/item_1/id = 1
-popup/item_2/text = "Level 2"
-popup/item_2/id = 2
-
 [node name="pause_menu" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="pause_menu"]
 anchors_preset = 15
@@ -225,6 +221,7 @@ layout_mode = 2
 text = "Quit"
 
 [node name="game_over_menu" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="game_over_menu"]
 anchors_preset = 15
@@ -271,8 +268,7 @@ layout_mode = 2
 text = "Quit"
 
 [connection signal="pressed" from="intro_container/VBoxContainer/SetupMarginContainer/SkipIntroButton" to="." method="_on_skip_intro_button_pressed"]
-[connection signal="pressed" from="main_menu/VBoxContainer/level_1" to="." method="_on_level_1_pressed"]
-[connection signal="pressed" from="main_menu/VBoxContainer/level_2" to="." method="_on_level_2_pressed"]
+[connection signal="pressed" from="main_menu/VBoxContainer/ChooseLevelButton" to="." method="_on_choose_level_button_pressed"]
 [connection signal="pressed" from="main_menu/VBoxContainer/SetupMarginContainer/VBoxContainer/Button_Quit_From_Main_Menu" to="." method="_on_button_quit_from_main_menu_pressed"]
 [connection signal="pressed" from="pause_menu/VBoxContainer/Button_Continue" to="." method="_on_button_continue_pressed"]
 [connection signal="pressed" from="pause_menu/VBoxContainer/Button_Restart" to="." method="_on_button_restart_pressed"]

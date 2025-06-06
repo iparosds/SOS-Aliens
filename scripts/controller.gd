@@ -78,7 +78,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			var click_position = get_viewport().get_camera_2d().get_global_mouse_position()
 			
-			# Primeiro: dispara o som do tiro
+			# Dispara o som do tiro
 			if ui:
 				scene_manager.ray_shot.play()
 			
