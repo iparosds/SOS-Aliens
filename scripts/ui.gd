@@ -121,6 +121,27 @@ func _on_button_quit_from_game_over_pressed() -> void:
 	get_tree().quit()
 
 
+var levels: Dictionary = {
+	1 : {
+		"label": "Level 1",
+		"url": "level_01.tscn",
+		"unblock": "_level01"
+	},
+	2 : {
+		"label": "Level 2",
+		"url": "level_02.tscn",
+		"unblock": "_level01"
+	},
+	3 : {
+		"label": "Level 3",
+		"url": "level_03.tscn",
+		"unblock": "_level01"
+	}
+}
+
+func _level01() -> bool:
+	return true
+
 ## Gera dinamicamente os botões de seleção de fases a partir dos arquivos encontrados na pasta levels
 func _generate_level_buttons():
 	# Abre o diretório onde os arquivos de fase estão localizados
