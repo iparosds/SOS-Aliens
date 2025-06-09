@@ -76,7 +76,6 @@ offset_right = 341.0
 offset_bottom = 36.3333
 
 [node name="main_menu" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="main_menu"]
 anchors_preset = 15
@@ -104,6 +103,7 @@ offset_right = 144.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_yev5y")
+alignment = 1
 
 [node name="ChooseLevelButton" type="Button" parent="main_menu/VBoxContainer"]
 layout_mode = 2

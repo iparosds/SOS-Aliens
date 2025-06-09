@@ -141,17 +141,20 @@ var levels: Dictionary = {
 	1 : {
 		"label": "Rio de Janeiro",
 		"url": "level_01.tscn",
-		"unblock": "_level01"
+		"unblock": "_level01",
+		"required_score": 0,
 	},
 	2 : {
 		"label": "Campinas",
 		"url": "level_02.tscn",
-		"unblock": "_level02"
+		"unblock": "_level02",
+		"required_score": 5,
 	},
 	3 : {
 		"label": "Fortaleza",
 		"url": "level_03.tscn",
-		"unblock": "_level03"
+		"unblock": "_level03",
+		"required_score": 10,
 	}
 }
 
@@ -161,11 +164,15 @@ func _level01() -> bool:
 
 
 func _level02() -> bool:
-	return true
+	var previous_level = "level_01"
+	var required_score = levels[2]["required_score"]
+	return Controller.high_scores.get(previous_level, 0) >= required_score
 
 
 func _level03() -> bool:
-	return false
+	var previous_level = "level_02"
+	var required_score = levels[3]["required_score"]
+	return Controller.high_scores.get(previous_level, 0) >= required_score
 
 
 func _generate_level_buttons():
@@ -176,15 +183,15 @@ func _generate_level_buttons():
 	
 	for level in level_keys:
 		var level_data = levels[level]
-	
+		
 		var label = level_data["label"]
 		var level_path = "res://levels/" + level_data["url"]
 		var unlock_level = level_data["unblock"]
 		
 		var button = Button.new()
 		var high_score = Controller.high_scores.get(level_data["url"].get_basename(), 0)
-		button.text = " %s - Score: %d" % [label, high_score]
-
+		var required_score = level_data.get("required_score", 0)
+		
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
 		# Verifica se o nível está desbloqueado chamando a função armazenada em unblock.
@@ -192,8 +199,13 @@ func _generate_level_buttons():
 		if has_method(unlock_level):
 			is_unlocked = call(unlock_level)
 		
+		if is_unlocked:
+			button.text = " %s - Score: %d" % [label, high_score]
+		else:
+			button.text = " Score necessario: %d" % [required_score]
+		
 		button.disabled = not is_unlocked
-
+		
 		# Conecta a ação ao botão se ele estiver desbloqueado.
 		if is_unlocked:
 			button.pressed.connect(func():

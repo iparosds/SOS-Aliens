@@ -10,7 +10,6 @@ var current_level_path: String
 var current_score := 0
 var high_scores: Dictionary = {}
 
-
 @onready var patriota = preload("res://scenes/patriota.tscn")
 @onready var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn")
 
@@ -29,7 +28,7 @@ func change_level(load_level):
 	level = new_level
 	
 	current_level_path = load_level
-	load_high_scores()  # <-- Adicionado aqui
+	load_high_scores()
 
 
 func start_level():
@@ -139,7 +138,6 @@ func back_to_main_menu():
 	ui.main_menu.visible = true
 	ui.label.text = "Bem-vindo de volta!"
 	camera_2d.reset_camera()
-
 
 
 func update_high_score():
