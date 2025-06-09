@@ -9,6 +9,7 @@ class_name UI extends Node2D
 @onready var intro_container: CanvasLayer = $intro_container
 @onready var intro_1: VideoStreamPlayer = $intro_container/intro1
 @onready var intro_2: VideoStreamPlayer = $intro_container/intro2
+@onready var score_label: Label = $header/ScoreLabel
 
 var is_paused: bool = false
 
@@ -30,6 +31,7 @@ func _ready():
 	intro_1.connect("finished", Callable(self, "_on_intro_1_finished"))
 	
 	_generate_level_buttons()
+	Controller.load_high_scores()
 
 
 ## Intro
@@ -52,9 +54,22 @@ func _on_skip_intro_button_pressed() -> void:
 	main_menu.visible = true
 
 
+## Score
+func update_score():
+	score_label.text = "Pontuação: %d" % Controller.current_score
+
+
 ## Main menu
 func _on_choose_level_button_pressed() -> void:
 	main_menu.visible = false
+	
+	var buttons_container = level_menu.get_node("ScrollContainer/MarginContainer/VBoxContainer")
+	
+	for child in buttons_container.get_children():
+		child.queue_free()
+	
+	_generate_level_buttons()
+	
 	level_menu.visible = true
 
 
@@ -121,89 +136,76 @@ func _on_button_quit_from_game_over_pressed() -> void:
 	get_tree().quit()
 
 
+## Level menu
 var levels: Dictionary = {
 	1 : {
-		"label": "Level 1",
+		"label": "Rio de Janeiro",
 		"url": "level_01.tscn",
 		"unblock": "_level01"
 	},
 	2 : {
-		"label": "Level 2",
+		"label": "Campinas",
 		"url": "level_02.tscn",
-		"unblock": "_level01"
+		"unblock": "_level02"
 	},
 	3 : {
-		"label": "Level 3",
+		"label": "Fortaleza",
 		"url": "level_03.tscn",
-		"unblock": "_level01"
+		"unblock": "_level03"
 	}
 }
+
 
 func _level01() -> bool:
 	return true
 
-## Gera dinamicamente os botões de seleção de fases a partir dos arquivos encontrados na pasta levels
+
+func _level02() -> bool:
+	return true
+
+
+func _level03() -> bool:
+	return false
+
+
 func _generate_level_buttons():
-	# Abre o diretório onde os arquivos de fase estão localizados
-	var dir = DirAccess.open("res://levels")
-	if dir == null:
-		print("Erro ao abrir diretório levels.")
-		return
+	var buttons_container = level_menu.get_node("ScrollContainer/MarginContainer/VBoxContainer")
 	
-	var level_files := []
-
-	# Inicia a leitura dos arquivos no diretório
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
+	var level_keys = levels.keys()
+	level_keys.sort()
 	
-	while file_name != "":
-		# Adiciona à lista apenas os arquivos de cena .tscn que não sejam diretórios
-		if file_name.ends_with(".tscn") and not dir.current_is_dir():
-			level_files.append(file_name)
-		file_name = dir.get_next()
-
-	# Ordena os arquivos com base no número contido no nome
-	level_files.sort_custom(func(a, b):
-		var a_number = _extract_level_number(a)
-		var b_number = _extract_level_number(b)
-		return a_number < b_number
-	)
-
-	# Acessa o VBoxContainer dentro da hierarquia de menus, onde os botões serão adicionados
-	var vbox = level_menu.get_node("ScrollContainer/MarginContainer/VBoxContainer")
+	for level in level_keys:
+		var level_data = levels[level]
 	
-	# Cria um botão para cada arquivo de level
-	for file in level_files:
-		var level_path = "res://levels/" + file
+		var label = level_data["label"]
+		var level_path = "res://levels/" + level_data["url"]
+		var unlock_level = level_data["unblock"]
+		
 		var button = Button.new()
-		
-		# Define o texto do botão baseado no nome do arquivo
-		button.text = " " + file.get_basename().capitalize() + " "
-		
-		# Define que o botão deve expandir horizontalmente para preencher o espaço
+		var high_score = Controller.high_scores.get(level_data["url"].get_basename(), 0)
+		button.text = " %s - Score: %d" % [label, high_score]
+
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
-		# Conecta o botão para que carregue e inicie o nível correspondente
-		button.pressed.connect(func():
-			level_menu.visible = false
-			Controller.change_level(level_path)
-			Controller.start_level()
-		)
+		# Verifica se o nível está desbloqueado chamando a função armazenada em unblock.
+		var is_unlocked = false
+		if has_method(unlock_level):
+			is_unlocked = call(unlock_level)
 		
-		# Adiciona o botão ao VBoxContainer
-		vbox.add_child(button)
+		button.disabled = not is_unlocked
+
+		# Conecta a ação ao botão se ele estiver desbloqueado.
+		if is_unlocked:
+			button.pressed.connect(func():
+				level_menu.visible = false
+				Controller.change_level(level_path)
+				Controller.start_level()
+			)
+		
+		buttons_container.add_child(button)
 
 
-## Extrai o número do nível a partir do nome do arquivo
-func _extract_level_number(file_name: String) -> int:
-	var regex = RegEx.new()
-	# Expressão regular para encontrar o primeiro número na string
-	regex.compile(r"\d+")
-	
-	var result = regex.search(file_name)
-	if result:
-		# Converte o número encontrado para inteiro
-		return int(result.get_string())
-	
-	# Retorna 0 caso nenhum número seja encontrado
-	return 0
+func _on_back_to_main_menu_pressed() -> void:
+	level_menu.visible = false
+	get_tree().paused = false
+	Controller.back_to_main_menu()

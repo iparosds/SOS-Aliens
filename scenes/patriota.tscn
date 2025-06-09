@@ -131,4 +131,4 @@ shape = SubResource("CapsuleShape2D_d71mh")
 
 [node name="plock_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_lh51e")
-volume_db = -6.0
+volume_db = -8.0

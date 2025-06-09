@@ -55,17 +55,9 @@ func kill():
 	_particle.rotation = direction.angle()
 	_particle.emitting = true
 	get_tree().current_scene.add_child(_particle)
+	
+	Controller.current_score += 1
+	Controller.ui.update_score()
+	Controller.update_high_score()
+	
 	queue_free()
-
-
-#func kill():
-	#var _particle = deathParticle.instantiate()
-	#_particle.global_position = global_position
-	#_particle.rotation = direction.angle()
-	#_particle.emitting = true
-	#get_tree().current_scene.add_child(_particle)
-#
-	#queue_free()
-#
-	#await get_tree().create_timer(0.4).timeout
-	#_particle.queue_free()

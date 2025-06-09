@@ -4,13 +4,20 @@ var scene_manager: SceneManager
 var level: Level
 var ui: UI
 var camera_2d: Camera2D
-
 var total_patriotas_generated := 0
 var max_patriotas_by_level := 0
 var current_level_path: String
+var current_score := 0
+var high_scores: Dictionary = {}
+
 
 @onready var patriota = preload("res://scenes/patriota.tscn")
 @onready var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn")
+
+
+func _ready():
+	load_high_scores()
+
 
 func change_level(load_level):
 	var new_level = load(load_level).instantiate()
@@ -22,6 +29,8 @@ func change_level(load_level):
 	level = new_level
 	
 	current_level_path = load_level
+	load_high_scores()  # <-- Adicionado aqui
+
 
 func start_level():
 	randomize()
@@ -32,12 +41,27 @@ func start_level():
 	ui.main_menu.visible = false
 	ui.label.text = "Bom jogo!"
 	camera_2d.reset_camera()
+	
+	current_score = 0
+	ui.update_score()
 
 func restart_level():
 	if current_level_path:
 		change_level(current_level_path)
 		start_level()
 		camera_2d.reset_camera()
+
+
+func save_high_scores():
+	var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
+	file.store_var(high_scores)
+
+
+func load_high_scores():
+	if FileAccess.file_exists("user://high_scores.save"):
+		var file = FileAccess.open("user://high_scores.save", FileAccess.READ)
+		high_scores = file.get_var()
+
 
 func spawn_patriota():
 	if total_patriotas_generated >= max_patriotas_by_level:
@@ -63,11 +87,14 @@ func game_over():
 	level.visible = false
 	level.timer.stop()
 	
+	update_high_score()
+	save_high_scores()
 	ui.label.text = "Game Over"
 	ui.pause_menu.visible = false
 	ui.main_menu.visible = false
 	ui.game_over_menu.visible = true
 	get_tree().paused = false
+
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -98,8 +125,11 @@ func toggle_pause():
 	else:
 		ui.show_pause_menu()
 
+
 func back_to_main_menu():
 	if level:
+		update_high_score()
+		save_high_scores()
 		level.queue_free()
 		level = null
 	
@@ -109,3 +139,14 @@ func back_to_main_menu():
 	ui.main_menu.visible = true
 	ui.label.text = "Bem-vindo de volta!"
 	camera_2d.reset_camera()
+
+
+
+func update_high_score():
+	var level_name = current_level_path.get_file().get_basename()
+	if not high_scores.has(level_name):
+		high_scores[level_name] = 0
+	
+	if current_score > high_scores[level_name]:
+		high_scores[level_name] = current_score
+		save_high_scores()

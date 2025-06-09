@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://whl8knu488vf" path="res://scenes/camera_2d.tscn" id="3_b81s6"]
 [ext_resource type="PackedScene" uid="uid://42oeppt28feq" path="res://scenes/ui.tscn" id="3_q7wi7"]
 [ext_resource type="AudioStream" uid="uid://ba22vcqxc4evk" path="res://assets/media/sounds/gameplay music loop.mp3" id="4_q7wi7"]
-[ext_resource type="AudioStream" uid="uid://c8hyvkpshd7vb" path="res://assets/media/sounds/pop-fx_G_major.wav" id="5_6k21d"]
+[ext_resource type="AudioStream" uid="uid://da3souid472nw" path="res://assets/media/sounds/sfx ship shot 1.mp3" id="5_q7wi7"]
 
 [node name="SceneManager" type="Node2D"]
 script = ExtResource("1_b81s6")
@@ -22,6 +22,6 @@ stream = ExtResource("4_q7wi7")
 volume_db = -15.0
 
 [node name="RayShot" type="AudioStreamPlayer" parent="SoundPlayer"]
-stream = ExtResource("5_6k21d")
+stream = ExtResource("5_q7wi7")
 volume_db = -6.0
 bus = &"SFX"
