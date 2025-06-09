@@ -24,10 +24,10 @@ func _process(delta: float) -> void:
 		position.x -= CameraPanSpeed
 	if Input.is_action_pressed("right"):
 		position.x += CameraPanSpeed
-	if Input.is_action_just_pressed("zoom_in"):
+	if Input.is_action_just_pressed("zoom_in") and zoom.x < 1.5:
 		zoom.x += 0.1
 		zoom.y += 0.1
-	if Input.is_action_just_pressed("zoom_out"):
+	if Input.is_action_just_pressed("zoom_out") and zoom.x > 0.5:
 		zoom.x -= 0.1
 		zoom.y -= 0.1
 
