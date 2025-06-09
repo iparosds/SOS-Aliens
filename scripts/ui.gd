@@ -2,14 +2,14 @@ class_name UI extends Node2D
 
 @onready var main_menu: CanvasLayer = $main_menu
 @onready var header: CanvasLayer = $header
-@onready var label: Label = $header/Label
+@onready var label: Label = $header/HBoxContainer/MarginContainer/Label
 @onready var level_menu: CanvasLayer = $level_menu
 @onready var pause_menu: CanvasLayer = $pause_menu
 @onready var game_over_menu: CanvasLayer = $game_over_menu
 @onready var intro_container: CanvasLayer = $intro_container
 @onready var intro_1: VideoStreamPlayer = $intro_container/intro1
 @onready var intro_2: VideoStreamPlayer = $intro_container/intro2
-@onready var score_label: Label = $header/ScoreLabel
+@onready var score_label: Label = $header/HBoxContainer/MarginContainer2/ScoreLabel
 
 var is_paused: bool = false
 
@@ -56,7 +56,7 @@ func _on_skip_intro_button_pressed() -> void:
 
 ## Score
 func update_score():
-	score_label.text = "Pontuação: %d" % Controller.current_score
+	score_label.text = "Kills: %d" % Controller.current_score
 
 
 ## Main menu

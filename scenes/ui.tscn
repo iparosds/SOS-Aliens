@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://42oeppt28feq"]
+[gd_scene load_steps=10 format=3 uid="uid://42oeppt28feq"]
 
 [ext_resource type="Script" uid="uid://bcsw0mt21tpsw" path="res://scripts/ui.gd" id="1_nt7q6"]
 [ext_resource type="VideoStream" uid="uid://bbup00575hgcg" path="res://assets/media/videos/patriotas_final_1.ogv" id="2_p7vwb"]
@@ -7,6 +7,22 @@
 [ext_resource type="Theme" uid="uid://dmhlpo4s3t401" path="res://assets/themes/default_menu_theme.tres" id="3_yev5y"]
 [ext_resource type="Texture2D" uid="uid://d1ar24frbwesc" path="res://assets/media/images/logo-converter.png" id="4_wm3ai"]
 [ext_resource type="FontFile" uid="uid://cul3qtiyor1u1" path="res://assets/fonts/Early GameBoy.ttf" id="5_8dubc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7vwb"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.18359, 0.18359, 0.18359, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.690196, 0.866667, 0.486275, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_p7vwb"]
 font = ExtResource("5_8dubc")
@@ -17,6 +33,7 @@ font_color = Color(0.690196, 0.866667, 0.486275, 1)
 script = ExtResource("1_nt7q6")
 
 [node name="intro_container" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="intro1" type="VideoStreamPlayer" parent="intro_container"]
 anchors_preset = 15
@@ -63,17 +80,39 @@ text = "Skip"
 
 [node name="header" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="header"]
-offset_right = 40.0
-offset_bottom = 22.3333
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+[node name="HBoxContainer" type="HBoxContainer" parent="header"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+alignment = 1
 
-[node name="ScoreLabel" type="Label" parent="header"]
-modulate = Color(0.0475577, 0.0475576, 0.0475576, 1)
-offset_left = 301.0
-offset_top = 14.0
-offset_right = 341.0
-offset_bottom = 36.3333
+[node name="MarginContainer" type="MarginContainer" parent="header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="header/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.960784, 0.960784, 0.960784, 1)
+theme_override_fonts/font = ExtResource("5_8dubc")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_p7vwb")
+
+[node name="MarginContainer2" type="MarginContainer" parent="header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+
+[node name="ScoreLabel" type="Label" parent="header/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.960351, 0.960351, 0.960351, 1)
+theme_override_fonts/font = ExtResource("5_8dubc")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_p7vwb")
 
 [node name="main_menu" type="CanvasLayer" parent="."]
 
