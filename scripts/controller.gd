@@ -6,12 +6,47 @@ var ui: UI
 var camera_2d: Camera2D
 var total_patriotas_generated := 0
 var max_patriotas_by_level := 0
+var current_level: String
 var current_level_path: String
 var current_score := 0
 var high_scores: Dictionary = {}
 
 @onready var patriota = preload("res://scenes/patriota.tscn")
 @onready var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn")
+
+var levels: Dictionary = {
+	"level01" : {
+		"label": "Rio de Janeiro",
+		"url": "level_01.tscn",
+		"unblock": "_level01",
+	},
+	"level02" : {
+		"label": "Campinas",
+		"url": "level_02.tscn",
+		"unblock": "_level02",
+	},
+	"level03" : {
+		"label": "Fortaleza",
+		"url": "level_03.tscn",
+		"unblock": "_level03",
+	}
+}
+
+func _level01() -> bool:
+	return true
+
+
+func _level02() -> bool:
+	return high_scores.get("level01", 0) >= 5
+
+
+func _level03() -> bool:
+	return high_scores.get("level02", 0) >= 10
+
+func is_unlocked(level_id) -> bool:
+	if has_method(levels[levels.find_key(level_id)]["unblock"]):
+			return call(levels[levels.find_key(level_id)]["unblock"])
+	return false
 
 
 func _ready():
@@ -27,7 +62,8 @@ func change_level(load_level):
 	scene_manager.add_child(new_level)
 	level = new_level
 	
-	current_level_path = load_level
+	current_level = load_level
+	current_level_path = "res://levels/" + load_level
 	load_high_scores()
 
 
@@ -49,11 +85,6 @@ func restart_level():
 		change_level(current_level_path)
 		start_level()
 		camera_2d.reset_camera()
-
-
-func save_high_scores():
-	var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
-	file.store_var(high_scores)
 
 
 func load_high_scores():
@@ -87,7 +118,6 @@ func game_over():
 	level.timer.stop()
 	
 	update_high_score()
-	save_high_scores()
 	ui.label.text = "Game Over"
 	ui.pause_menu.visible = false
 	ui.main_menu.visible = false
@@ -128,7 +158,6 @@ func toggle_pause():
 func back_to_main_menu():
 	if level:
 		update_high_score()
-		save_high_scores()
 		level.queue_free()
 		level = null
 	
@@ -147,4 +176,5 @@ func update_high_score():
 	
 	if current_score > high_scores[level_name]:
 		high_scores[level_name] = current_score
-		save_high_scores()
+		var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
+		file.store_var(high_scores)
