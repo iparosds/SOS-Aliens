@@ -55,8 +55,8 @@ func _on_skip_intro_button_pressed() -> void:
 
 
 ## Score
-func update_score():
-	score_label.text = "Kills: %d" % Controller.current_score
+func update_score(current_score):
+	score_label.text = "Kills: %d" % current_score
 
 
 ## Main menu
@@ -137,82 +137,37 @@ func _on_button_quit_from_game_over_pressed() -> void:
 
 
 ## Level menu
-var levels: Dictionary = {
-	1 : {
-		"label": "Rio de Janeiro",
-		"url": "level_01.tscn",
-		"unblock": "_level01",
-		"required_score": 0,
-	},
-	2 : {
-		"label": "Campinas",
-		"url": "level_02.tscn",
-		"unblock": "_level02",
-		"required_score": 5,
-	},
-	3 : {
-		"label": "Fortaleza",
-		"url": "level_03.tscn",
-		"unblock": "_level03",
-		"required_score": 10,
-	}
-}
-
-
-func _level01() -> bool:
-	return true
-
-
-func _level02() -> bool:
-	var previous_level = "level_01"
-	var required_score = levels[2]["required_score"]
-	return Controller.high_scores.get(previous_level, 0) >= required_score
-
-
-func _level03() -> bool:
-	var previous_level = "level_02"
-	var required_score = levels[3]["required_score"]
-	return Controller.high_scores.get(previous_level, 0) >= required_score
-
-
 func _generate_level_buttons():
 	var buttons_container = level_menu.get_node("ScrollContainer/MarginContainer/VBoxContainer")
 	
-	var level_keys = levels.keys()
+	for child in buttons_container.get_children():
+		child.queue_free()
+	
+	var level_keys = Controller.levels.keys()
 	level_keys.sort()
 	
-	for level in level_keys:
-		var level_data = levels[level]
-		
+	for level_id in level_keys:
+		var level_data = Controller.levels[level_id]
 		var label = level_data["label"]
 		var level_path = "res://levels/" + level_data["url"]
-		var unlock_level = level_data["unblock"]
 		
 		var button = Button.new()
-		var high_score = Controller.high_scores.get(level_data["url"].get_basename(), 0)
-		var required_score = level_data.get("required_score", 0)
+		var high_score = Controller.high_scores.get(level_id, 0)
+		var is_unlocked = Controller.is_unlocked(level_id)
 		
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
-		# Verifica se o nível está desbloqueado chamando a função armazenada em unblock.
-		var is_unlocked = false
-		if has_method(unlock_level):
-			is_unlocked = call(unlock_level)
-		
 		if is_unlocked:
 			button.text = " %s - Score: %d" % [label, high_score]
-		else:
-			button.text = " Score necessario: %d" % [required_score]
-		
-		button.disabled = not is_unlocked
-		
-		# Conecta a ação ao botão se ele estiver desbloqueado.
-		if is_unlocked:
+			button.disabled = false
 			button.pressed.connect(func():
 				level_menu.visible = false
-				Controller.change_level(level_path)
+				Controller.change_level(level_data["url"])
 				Controller.start_level()
 			)
+		else:
+			button.text = label
+			button.disabled = true
 		
 		buttons_container.add_child(button)
 
