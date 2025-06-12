@@ -9,7 +9,6 @@ class_name Patriota extends CharacterBody2D
 var saida: Vector2 = Vector2(0,0)
 var direction: Vector2
 
-signal patriota_killed
 
 func _ready():
 	navigation_agent_2d.target_position = saida
@@ -53,5 +52,5 @@ func kill():
 	_particle.emitting = true
 	get_tree().current_scene.add_child(_particle)
 	
-	emit_signal("patriota_killed")
+	Controller.add_point()
 	queue_free()

@@ -158,7 +158,7 @@ func _generate_level_buttons():
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
 		if is_unlocked:
-			button.text = " %s - Score: %d" % [label, high_score]
+			button.text = " %s - High Score: %d" % [label, high_score]
 			button.disabled = false
 			button.pressed.connect(func():
 				level_menu.visible = false

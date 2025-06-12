@@ -113,13 +113,11 @@ func spawn_patriota():
 	new_patriota.global_position = entrada_random.global_position
 	new_patriota.saida = saida_random.global_position
 	
-	new_patriota.patriota_killed.connect(_on_patriota_killed)
-	
 	level.add_child(new_patriota)
 	total_patriotas_generated += 1
 
 
-func _on_patriota_killed():
+func add_point():
 	current_score += 1
 	ui.update_score(current_score)
 
