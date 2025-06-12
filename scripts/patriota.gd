@@ -4,13 +4,9 @@ class_name Patriota extends CharacterBody2D
 @onready var animation_player: AnimatedSprite2D = $AnimationPlayer
 @onready var click_area: Area2D = $ClickArea
 @onready var plock_sound: AudioStreamPlayer = $plock_sound
-
-# Velocidade de movimentação da barata (pode ser configurada no editor)
 @export var speed: float = 100.0
 
 var saida: Vector2 = Vector2(0,0)
-
-# Direção atual do movimento da barata (atualizada a cada frame)
 var direction: Vector2
 
 
@@ -44,7 +40,7 @@ func _physics_process(delta):
 ## Freeze e delay antes de explodir.
 func kill():
 	var _particle = preload("res://scenes/DeathParticlesBloodExplosion.tscn").instantiate()
-
+	
 	animation_player.stop()
 	click_area.set_deferred("disabled", true)  # evita múltiplos cliques
 	set_physics_process(false)
@@ -56,8 +52,5 @@ func kill():
 	_particle.emitting = true
 	get_tree().current_scene.add_child(_particle)
 	
-	Controller.current_score += 1
-	Controller.ui.update_score()
-	Controller.update_high_score()
-	
+	Controller.add_point()
 	queue_free()
