@@ -42,7 +42,7 @@ func kill():
 	var _particle = preload("res://scenes/DeathParticlesBloodExplosion.tscn").instantiate()
 	
 	animation_player.stop()
-	click_area.set_deferred("disabled", true)  # evita múltiplos cliques
+	click_area.set_deferred("disabled", true)
 	set_physics_process(false)
 	
 	await get_tree().create_timer(0.15).timeout

@@ -2,7 +2,7 @@ class_name UI extends Node2D
 
 @onready var main_menu: CanvasLayer = $main_menu
 @onready var header: CanvasLayer = $header
-@onready var label: Label = $header/HBoxContainer/MarginContainer/Label
+@onready var high_score_label: Label = $header/HBoxContainer/MarginContainer/HighScoreLabel
 @onready var level_menu: CanvasLayer = $level_menu
 @onready var pause_menu: CanvasLayer = $pause_menu
 @onready var game_over_menu: CanvasLayer = $game_over_menu
@@ -52,11 +52,6 @@ func _on_skip_intro_button_pressed() -> void:
 	intro_2.stop()
 	intro_container.visible = false
 	main_menu.visible = true
-
-
-## Score
-func update_score(current_score):
-	score_label.text = "Kills: %d" % current_score
 
 
 ## Main menu
@@ -152,13 +147,12 @@ func _generate_level_buttons():
 		var level_path = "res://levels/" + level_data["url"]
 		
 		var button = Button.new()
-		var high_score = Controller.high_scores.get(level_id, 0)
 		var is_unlocked = Controller.is_unlocked(level_id)
 		
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
 		if is_unlocked:
-			button.text = " %s - High Score: %d" % [label, high_score]
+			button.text = " " + label + " " 
 			button.disabled = false
 			button.pressed.connect(func():
 				level_menu.visible = false
@@ -176,3 +170,12 @@ func _on_back_to_main_menu_pressed() -> void:
 	level_menu.visible = false
 	get_tree().paused = false
 	Controller.back_to_main_menu()
+
+
+## Score
+func update_score(current_score):
+	score_label.text = "Score: %d" % current_score
+
+
+func show_high_score(high_score):
+	high_score_label.text = "High Score: %d" % high_score

@@ -64,11 +64,12 @@ func start_level():
 	level.timer.start()
 	level.spawn.start()
 	ui.main_menu.visible = false
-	ui.label.text = "Bom jogo!"
 	camera_2d.reset_camera()
 	
 	current_score = 0
 	ui.update_score(current_score)
+	
+	ui.show_high_score(	update_high_score() )
 
 
 func restart_level():
@@ -79,15 +80,20 @@ func restart_level():
 
 
 func change_level(load_level):
-	var level_path = "res://levels/" + load_level
-	var new_level = load(level_path).instantiate()
+	var level_path: String
+	if load_level.begins_with("res://"):
+		level_path = load_level
+	else:
+		level_path = "res://levels/" + load_level
 	
+	var new_level = load(level_path).instantiate()
+
 	if level:
 		scene_manager.remove_child(level)
-	
+
 	scene_manager.add_child(new_level)
 	level = new_level
-	
+
 	for level_id in levels:
 		if levels[level_id]["url"] == load_level:
 			current_level = level_id
@@ -97,6 +103,7 @@ func change_level(load_level):
 	load_high_scores()
 	update_high_score()
 	ui._generate_level_buttons()
+
 
 
 func spawn_patriota():
@@ -117,17 +124,10 @@ func spawn_patriota():
 	total_patriotas_generated += 1
 
 
-func add_point():
-	current_score += 1
-	ui.update_score(current_score)
-
-
 func game_over():
-	print("game_over")
 	level.visible = false
 	level.timer.stop()
 	
-	ui.label.text = "Game Over"
 	ui.pause_menu.visible = false
 	ui.main_menu.visible = false
 	ui.game_over_menu.visible = true
@@ -135,6 +135,9 @@ func game_over():
 	
 	update_high_score()
 	ui._generate_level_buttons()
+	
+	ui.show_high_score(update_high_score())
+
 
 
 
@@ -177,7 +180,6 @@ func back_to_main_menu():
 	get_tree().paused = false
 	
 	ui.main_menu.visible = true
-	ui.label.text = "Bem-vindo de volta!"
 	camera_2d.reset_camera()
 	update_high_score()
 	ui._generate_level_buttons()
@@ -189,6 +191,11 @@ func load_high_scores():
 		high_scores = file.get_var()
 
 
+func add_point():
+	current_score += 1
+	ui.update_score(current_score)
+
+
 func update_high_score():
 	var level_id = current_level.get_basename()
 	if not high_scores.has(level_id):
@@ -198,3 +205,5 @@ func update_high_score():
 		high_scores[level_id] = current_score
 		var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
 		file.store_var(high_scores)
+	
+	return high_scores[level_id]
