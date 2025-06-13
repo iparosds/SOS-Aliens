@@ -94,7 +94,7 @@ layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="header/HBoxContainer/MarginContainer"]
+[node name="HighScoreLabel" type="Label" parent="header/HBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.960784, 0.960784, 0.960784, 1)

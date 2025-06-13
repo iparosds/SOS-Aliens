@@ -39,11 +39,11 @@ func _level01() -> bool:
 
 
 func _level02() -> bool:
-	return high_scores.get("level01", 0) >= 5
+	return high_scores.get("level01", 0) >= 1
 
 
 func _level03() -> bool:
-	return high_scores.get("level02", 0) >= 10
+	return high_scores.get("level02", 0) >= 1
 
 
 func _ready():
@@ -64,11 +64,12 @@ func start_level():
 	level.timer.start()
 	level.spawn.start()
 	ui.main_menu.visible = false
-	ui.label.text = "Bom jogo!"
 	camera_2d.reset_camera()
 	
 	current_score = 0
 	ui.update_score(current_score)
+	
+	ui.show_high_score(	update_high_score() )
 
 
 func restart_level():
@@ -79,7 +80,12 @@ func restart_level():
 
 
 func change_level(load_level):
-	var level_path = "res://levels/" + load_level
+	var level_path: String
+	if load_level.begins_with("res://"):
+		level_path = load_level
+	else:
+		level_path = "res://levels/" + load_level
+	
 	var new_level = load(level_path).instantiate()
 	
 	if level:
@@ -92,11 +98,12 @@ func change_level(load_level):
 		if levels[level_id]["url"] == load_level:
 			current_level = level_id
 			break
-
+	
 	current_level_path = level_path
 	load_high_scores()
 	update_high_score()
 	ui._generate_level_buttons()
+
 
 
 func spawn_patriota():
@@ -117,17 +124,10 @@ func spawn_patriota():
 	total_patriotas_generated += 1
 
 
-func add_point():
-	current_score += 1
-	ui.update_score(current_score)
-
-
 func game_over():
-	print("game_over")
 	level.visible = false
 	level.timer.stop()
 	
-	ui.label.text = "Game Over"
 	ui.pause_menu.visible = false
 	ui.main_menu.visible = false
 	ui.game_over_menu.visible = true
@@ -135,6 +135,8 @@ func game_over():
 	
 	update_high_score()
 	ui._generate_level_buttons()
+	
+	ui.show_high_score(update_high_score())
 
 
 
@@ -177,7 +179,6 @@ func back_to_main_menu():
 	get_tree().paused = false
 	
 	ui.main_menu.visible = true
-	ui.label.text = "Bem-vindo de volta!"
 	camera_2d.reset_camera()
 	update_high_score()
 	ui._generate_level_buttons()
@@ -189,12 +190,56 @@ func load_high_scores():
 		high_scores = file.get_var()
 
 
+func add_point():
+	current_score += 1
+	ui.update_score(current_score)
+	update_high_score()
+	check_for_unlocked_levels()
+
+
 func update_high_score():
 	var level_id = current_level.get_basename()
 	if not high_scores.has(level_id):
 		high_scores[level_id] = 0
-
-	if current_score > high_scores[level_id]:
+	
+	var old_score = high_scores[level_id]
+	
+	if current_score > old_score:
 		high_scores[level_id] = current_score
 		var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
 		file.store_var(high_scores)
+		
+		check_for_unlocked_levels()
+	
+	return high_scores[level_id]
+
+
+func check_for_unlocked_levels():
+	var next_level = get_next_level_id(current_level)
+	if next_level == "":
+		return
+	
+	var data = levels[next_level]
+	var unlocked = is_unlocked(next_level)
+	var already_seen = high_scores.has("_seen_" + next_level)
+	
+	if unlocked and not already_seen:
+		high_scores["_seen_" + next_level] = true
+		var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
+		file.store_var(high_scores)
+		
+		# Instancia o popup dentro do level atual
+		print("Popup adicionado ao level")
+		var popup_scene = preload("res://scenes/achievement_popup.tscn")
+		var popup = popup_scene.instantiate()
+		level.add_child(popup)
+		popup.show_achievement(data["label"])
+		get_tree().paused = true
+
+
+func get_next_level_id(current: String) -> String:
+	var keys = levels.keys()
+	var current_index = keys.find(current)
+	if current_index == -1 or current_index >= keys.size() - 1:
+		return ""
+	return keys[current_index + 1]
