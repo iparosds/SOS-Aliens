@@ -32,6 +32,7 @@ func _ready():
 	
 	_generate_level_buttons()
 	Controller.load_high_scores()
+	
 
 
 ## Intro

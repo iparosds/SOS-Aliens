@@ -39,11 +39,11 @@ func _level01() -> bool:
 
 
 func _level02() -> bool:
-	return high_scores.get("level01", 0) >= 5
+	return high_scores.get("level01", 0) >= 1
 
 
 func _level03() -> bool:
-	return high_scores.get("level02", 0) >= 10
+	return high_scores.get("level02", 0) >= 1
 
 
 func _ready():
@@ -87,18 +87,18 @@ func change_level(load_level):
 		level_path = "res://levels/" + load_level
 	
 	var new_level = load(level_path).instantiate()
-
+	
 	if level:
 		scene_manager.remove_child(level)
-
+	
 	scene_manager.add_child(new_level)
 	level = new_level
-
+	
 	for level_id in levels:
 		if levels[level_id]["url"] == load_level:
 			current_level = level_id
 			break
-
+	
 	current_level_path = level_path
 	load_high_scores()
 	update_high_score()
@@ -137,7 +137,6 @@ func game_over():
 	ui._generate_level_buttons()
 	
 	ui.show_high_score(update_high_score())
-
 
 
 
@@ -194,16 +193,53 @@ func load_high_scores():
 func add_point():
 	current_score += 1
 	ui.update_score(current_score)
+	update_high_score()
+	check_for_unlocked_levels()
 
 
 func update_high_score():
 	var level_id = current_level.get_basename()
 	if not high_scores.has(level_id):
 		high_scores[level_id] = 0
-
-	if current_score > high_scores[level_id]:
+	
+	var old_score = high_scores[level_id]
+	
+	if current_score > old_score:
 		high_scores[level_id] = current_score
 		var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
 		file.store_var(high_scores)
+		
+		check_for_unlocked_levels()
 	
 	return high_scores[level_id]
+
+
+func check_for_unlocked_levels():
+	var next_level = get_next_level_id(current_level)
+	if next_level == "":
+		return
+	
+	var data = levels[next_level]
+	var unlocked = is_unlocked(next_level)
+	var already_seen = high_scores.has("_seen_" + next_level)
+	
+	if unlocked and not already_seen:
+		high_scores["_seen_" + next_level] = true
+		var file = FileAccess.open("user://high_scores.save", FileAccess.WRITE)
+		file.store_var(high_scores)
+		
+		# Instancia o popup dentro do level atual
+		print("Popup adicionado ao level")
+		var popup_scene = preload("res://scenes/achievement_popup.tscn")
+		var popup = popup_scene.instantiate()
+		level.add_child(popup)
+		popup.show_achievement(data["label"])
+		get_tree().paused = true
+
+
+func get_next_level_id(current: String) -> String:
+	var keys = levels.keys()
+	var current_index = keys.find(current)
+	if current_index == -1 or current_index >= keys.size() - 1:
+		return ""
+	return keys[current_index + 1]
