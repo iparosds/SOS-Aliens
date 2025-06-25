@@ -10,6 +10,7 @@ class_name UI extends Node2D
 @onready var intro_1: VideoStreamPlayer = $intro_container/intro1
 @onready var intro_2: VideoStreamPlayer = $intro_container/intro2
 @onready var score_label: Label = $header/HBoxContainer/MarginContainer2/ScoreLabel
+@onready var sound_toggle_button: TextureButton = $sound_icons/VBoxContainer/sound_toggle_button
 
 var is_paused: bool = false
 
@@ -181,3 +182,8 @@ func update_score(current_score):
 
 func show_high_score(high_score):
 	high_score_label.text = "High Score: %d" % high_score
+
+
+## Sounds
+func _on_sound_toggle_button_pressed() -> void:
+	Controller.toggle_sound()

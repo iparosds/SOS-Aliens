@@ -10,10 +10,7 @@ var current_level: String
 var current_level_path: String
 var current_score := 0
 var high_scores: Dictionary = {}
-
-@onready var patriota = preload("res://scenes/patriota.tscn")
-@onready var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn")
-
+var sound_muted: bool = false
 
 var levels: Dictionary = {
 	"level01" : {
@@ -32,6 +29,9 @@ var levels: Dictionary = {
 		"unblock": "_level03",
 	}
 }
+
+@onready var patriota = preload("res://scenes/patriota.tscn")
+@onready var particle = preload("res://scenes/DeathParticlesRayExplosion.tscn")
 
 
 func _level01() -> bool:
@@ -140,7 +140,6 @@ func game_over():
 	ui.show_high_score(update_high_score())
 
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		toggle_pause()
@@ -230,7 +229,6 @@ func check_for_unlocked_levels():
 		file.store_var(high_scores)
 		
 		# Instancia o popup dentro do level atual
-		print("Popup adicionado ao level")
 		var popup_scene = preload("res://scenes/achievement_popup.tscn")
 		var popup = popup_scene.instantiate()
 		level.add_child(popup)
@@ -244,3 +242,14 @@ func get_next_level_id(current: String) -> String:
 	if current_index == -1 or current_index >= keys.size() - 1:
 		return ""
 	return keys[current_index + 1]
+
+
+## Sounds
+func toggle_sound() -> void:
+	sound_muted = !sound_muted
+	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), sound_muted)
+	
+	if sound_muted:
+		ui.sound_toggle_button.texture_normal = preload("res://assets/media/images/sound-off.svg")
+	else:
+		ui.sound_toggle_button.texture_normal = preload("res://assets/media/images/sound-loud.svg")
