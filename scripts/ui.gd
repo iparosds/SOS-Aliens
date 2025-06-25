@@ -19,6 +19,7 @@ func _ready():
 	
 	main_menu.visible = false
 	game_over_menu.visible = false
+	header.visible = false
 	
 	pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	hide_pause_menu()

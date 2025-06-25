@@ -65,6 +65,7 @@ func start_level():
 	level.spawn.start()
 	ui.main_menu.visible = false
 	camera_2d.reset_camera()
+	ui.header.visible = true
 	
 	current_score = 0
 	ui.update_score(current_score)
@@ -160,7 +161,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func toggle_pause():
-	if ui.main_menu.visible || ui.game_over_menu.visible:
+	if ui.main_menu.visible || ui.game_over_menu.visible || ui.intro_container.visible:
 		return
 	
 	if ui.is_paused:

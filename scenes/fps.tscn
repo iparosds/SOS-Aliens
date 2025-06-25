@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dby7rbf2klgm0" path="res://fps.gd" id="1_jtrh3"]
 
 [node name="FPS" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_jtrh3")
 
 [node name="Label" type="Label" parent="."]
