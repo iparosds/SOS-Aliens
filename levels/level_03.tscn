@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://mux8il3lbk2v"]
+[gd_scene load_steps=7 format=4 uid="uid://mux8il3lbk2v"]
 
 [ext_resource type="Script" uid="uid://cq6hvd85q87qa" path="res://scripts/level.gd" id="1_lear0"]
 [ext_resource type="Texture2D" uid="uid://c8so6h2ldkd2c" path="res://assets/media/images/tileset.jpeg" id="2_85vqe"]
+[ext_resource type="PackedScene" uid="uid://1jwlt8wyr0ea" path="res://scenes/car.tscn" id="3_85vqe"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_mckh2"]
 vertices = PackedVector2Array(262, 1323.37, 186, 1323.66, 186, 326, 262, 326, 22, 1324.25, -54, 1324.54, -54, 326, 22, 326, 518, 1322.43, 442, 1322.71, 442, 326, 518, 326, 186, 266, 186, -20.0938, 262, -19.9297, 262, 266, -54, 266, -54, -20.6016, 22, -20.4375, 22, 266, 582, 266, 582, 326, -358, 326, -358, 266)
@@ -903,6 +904,9 @@ position = Vector2(213, 1299)
 
 [node name="SAida3" type="Node2D" parent="SaidasLabirinto"]
 position = Vector2(472, 1298)
+
+[node name="car" parent="." instance=ExtResource("3_85vqe")]
+position = Vector2(-12, 179)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Spawn" to="." method="_on_spawn_timeout"]

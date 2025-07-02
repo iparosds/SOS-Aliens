@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://42oeppt28feq"]
+[gd_scene load_steps=13 format=3 uid="uid://42oeppt28feq"]
 
 [ext_resource type="Script" uid="uid://bcsw0mt21tpsw" path="res://scripts/ui.gd" id="1_nt7q6"]
 [ext_resource type="VideoStream" uid="uid://bbup00575hgcg" path="res://assets/media/videos/patriotas_final_1.ogv" id="2_p7vwb"]
@@ -24,6 +24,29 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dvkv"]
+bg_color = Color(0.854902, 0, 0.137255, 0.862745)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vdcm2"]
+bg_color = Color(0, 1, 0.443137, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.270588, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="LabelSettings" id="LabelSettings_p7vwb"]
 font = ExtResource("5_8dubc")
@@ -115,7 +138,43 @@ theme_override_fonts/font = ExtResource("5_8dubc")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_p7vwb")
 
+[node name="VBoxContainer" type="VBoxContainer" parent="header"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -310.0
+offset_right = 85.0
+offset_bottom = -251.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.56, 0.56)
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="header/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_yev5y")
+theme_override_constants/margin_bottom = 0
+
+[node name="DragTimerLabel" type="Label" parent="header/VBoxContainer/MarginContainer"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Drag: --"
+
+[node name="ShotProgressBar" type="ProgressBar" parent="header/VBoxContainer"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_7dvkv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vdcm2")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
 [node name="main_menu" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="main_menu"]
 anchors_preset = 15

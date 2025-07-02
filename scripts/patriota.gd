@@ -15,7 +15,7 @@ func _ready():
 	click_area.input_event.connect(_on_click)
 
 
-func _on_click(viewport:Node, event:InputEvent, shape_idx:int):
+func _on_click(_viewport:Node, event:InputEvent, _shape_idx:int):
 	if (event is InputEventMouseButton or event is InputEventScreenTouch) and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			plock_sound.play()

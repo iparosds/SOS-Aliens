@@ -11,6 +11,9 @@ var current_level_path: String
 var current_score := 0
 var high_scores: Dictionary = {}
 var sound_muted: bool = false
+var car_dragging: bool = false
+var can_shoot: bool = true
+
 
 var levels: Dictionary = {
 	"level01" : {
@@ -136,27 +139,39 @@ func game_over():
 	
 	update_high_score()
 	ui._generate_level_buttons()
-	
 	ui.show_high_score(update_high_score())
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		toggle_pause()
-	
+
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			var click_position = get_viewport().get_camera_2d().get_global_mouse_position()
+			if not can_shoot:
+				return
 			
-			# Dispara o som do tiro
-			if ui:
-				scene_manager.ray_shot.play()
-			
-			# Instancia explosão onde o jogador clicou
-			var new_particle = particle.instantiate()
-			new_particle.global_position = click_position
-			new_particle.emitting = true
-			get_tree().current_scene.add_child(new_particle)
+			fire_shot()
+
+
+func fire_shot():
+	can_shoot = false
+	
+	var click_position = get_viewport().get_camera_2d().get_global_mouse_position()
+	
+	# Som do tiro
+	if ui:
+		scene_manager.ray_shot.play()
+	
+	# Instancia explosão
+	var new_particle = particle.instantiate()
+	new_particle.global_position = click_position
+	new_particle.emitting = true
+	get_tree().current_scene.add_child(new_particle)
+	
+	ui.animate_shoot_cooldown(0.45)
+	await get_tree().create_timer(0.5).timeout
+	can_shoot = true
 
 
 func toggle_pause():

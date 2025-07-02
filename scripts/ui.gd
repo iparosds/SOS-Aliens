@@ -11,6 +11,8 @@ class_name UI extends Node2D
 @onready var intro_2: VideoStreamPlayer = $intro_container/intro2
 @onready var score_label: Label = $header/HBoxContainer/MarginContainer2/ScoreLabel
 @onready var sound_toggle_button: TextureButton = $sound_icons/VBoxContainer/sound_toggle_button
+@onready var drag_timer_label: Label = $header/VBoxContainer/MarginContainer/DragTimerLabel
+@onready var shot_progress_bar: ProgressBar = $header/VBoxContainer/ShotProgressBar
 
 var is_paused: bool = false
 
@@ -147,7 +149,7 @@ func _generate_level_buttons():
 	for level_id in level_keys:
 		var level_data = Controller.levels[level_id]
 		var label = level_data["label"]
-		var level_path = "res://levels/" + level_data["url"]
+		var _level_path = "res://levels/" + level_data["url"]
 		
 		var button = Button.new()
 		var is_unlocked = Controller.is_unlocked(level_id)
@@ -187,3 +189,19 @@ func show_high_score(high_score):
 ## Sounds
 func _on_sound_toggle_button_pressed() -> void:
 	Controller.toggle_sound()
+
+
+func set_drag_timer_text(text: String, color: Color = Color.WHITE):
+	drag_timer_label.text = text
+	drag_timer_label.modulate = color
+
+
+func animate_shoot_cooldown(duration: float) -> void:
+	shot_progress_bar.value = 0.0
+	
+	var steps := 10
+	for i in range(steps + 1):
+		shot_progress_bar.value = i / float(steps)
+		await get_tree().create_timer(duration / steps).timeout
+	
+	shot_progress_bar.value = 1.0

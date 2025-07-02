@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://1jwlt8wyr0ea"]
+
+[ext_resource type="Texture2D" uid="uid://cys6q5fgkhf8v" path="res://assets/media/images/car_sprite.png" id="1_c35m8"]
+[ext_resource type="Script" uid="uid://cm0b1p0yaiy77" path="res://scripts/car.gd" id="1_qt2eu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qt2eu"]
+radius = 7.10637
+height = 22.7064
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_50v30"]
+radius = 7.0
+height = 26.0
+
+[node name="car" type="CharacterBody2D"]
+z_index = 10
+script = ExtResource("1_qt2eu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_c35m8")
+hframes = 5
+vframes = 5
+frame = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 0)
+rotation = -0.690893
+scale = Vector2(5.04, 5.04)
+shape = SubResource("CapsuleShape2D_qt2eu")
+
+[node name="ClickArea" type="Area2D" parent="."]
+position = Vector2(19, 17)
+rotation = -0.733553
+scale = Vector2(4.4, 4.89964)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickArea"]
+position = Vector2(0, -5)
+shape = SubResource("CapsuleShape2D_50v30")
+
+[node name="DragTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
