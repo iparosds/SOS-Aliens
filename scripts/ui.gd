@@ -2,7 +2,7 @@ class_name UI extends Node2D
 
 @onready var main_menu: CanvasLayer = $main_menu
 @onready var header: CanvasLayer = $header
-@onready var label: Label = $header/HBoxContainer/MarginContainer/Label
+@onready var high_score_label: Label = $header/HBoxContainer/MarginContainer/HighScoreLabel
 @onready var level_menu: CanvasLayer = $level_menu
 @onready var pause_menu: CanvasLayer = $pause_menu
 @onready var game_over_menu: CanvasLayer = $game_over_menu
@@ -10,6 +10,9 @@ class_name UI extends Node2D
 @onready var intro_1: VideoStreamPlayer = $intro_container/intro1
 @onready var intro_2: VideoStreamPlayer = $intro_container/intro2
 @onready var score_label: Label = $header/HBoxContainer/MarginContainer2/ScoreLabel
+@onready var sound_toggle_button: TextureButton = $sound_icons/VBoxContainer/sound_toggle_button
+@onready var drag_timer_label: Label = $header/VBoxContainer/MarginContainer/DragTimerLabel
+@onready var shot_progress_bar: ProgressBar = $header/VBoxContainer/ShotProgressBar
 
 var is_paused: bool = false
 
@@ -19,6 +22,7 @@ func _ready():
 	
 	main_menu.visible = false
 	game_over_menu.visible = false
+	header.visible = false
 	
 	pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	hide_pause_menu()
@@ -32,6 +36,7 @@ func _ready():
 	
 	_generate_level_buttons()
 	Controller.load_high_scores()
+	
 
 
 ## Intro
@@ -52,11 +57,6 @@ func _on_skip_intro_button_pressed() -> void:
 	intro_2.stop()
 	intro_container.visible = false
 	main_menu.visible = true
-
-
-## Score
-func update_score(current_score):
-	score_label.text = "Kills: %d" % current_score
 
 
 ## Main menu
@@ -149,16 +149,15 @@ func _generate_level_buttons():
 	for level_id in level_keys:
 		var level_data = Controller.levels[level_id]
 		var label = level_data["label"]
-		var level_path = "res://levels/" + level_data["url"]
+		var _level_path = "res://levels/" + level_data["url"]
 		
 		var button = Button.new()
-		var high_score = Controller.high_scores.get(level_id, 0)
 		var is_unlocked = Controller.is_unlocked(level_id)
 		
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		
 		if is_unlocked:
-			button.text = " %s - High Score: %d" % [label, high_score]
+			button.text = " " + label + " " 
 			button.disabled = false
 			button.pressed.connect(func():
 				level_menu.visible = false
@@ -176,3 +175,33 @@ func _on_back_to_main_menu_pressed() -> void:
 	level_menu.visible = false
 	get_tree().paused = false
 	Controller.back_to_main_menu()
+
+
+## Score
+func update_score(current_score):
+	score_label.text = "Score: %d" % current_score
+
+
+func show_high_score(high_score):
+	high_score_label.text = "High Score: %d" % high_score
+
+
+## Sounds
+func _on_sound_toggle_button_pressed() -> void:
+	Controller.toggle_sound()
+
+
+func set_drag_timer_text(text: String, color: Color = Color.WHITE):
+	drag_timer_label.text = text
+	drag_timer_label.modulate = color
+
+
+func animate_shoot_cooldown(duration: float) -> void:
+	shot_progress_bar.value = 0.0
+	
+	var steps := 10
+	for i in range(steps + 1):
+		shot_progress_bar.value = i / float(steps)
+		await get_tree().create_timer(duration / steps).timeout
+	
+	shot_progress_bar.value = 1.0

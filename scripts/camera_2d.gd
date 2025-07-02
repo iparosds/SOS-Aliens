@@ -15,7 +15,7 @@ func reset_camera():
 	zoom.y = 1
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_pressed("up"):
 		position.y -= CameraPanSpeed
 	if Input.is_action_pressed("down"):
@@ -36,12 +36,16 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
+				if Controller.car_dragging:
+					dragging = false
+					return
 				dragging = true
 				last_mouse_position = get_viewport().get_mouse_position()
 			else:
 				dragging = false
 	
-	if event is InputEventMouseMotion and dragging:
+	# Só move a câmera se não estiver arrastando o carro
+	if event is InputEventMouseMotion and dragging and not Controller.car_dragging:
 		var current_mouse_position = get_viewport().get_mouse_position()
 		var delta = last_mouse_position - current_mouse_position
 		position += delta * zoom

@@ -15,7 +15,7 @@ func _ready():
 	click_area.input_event.connect(_on_click)
 
 
-func _on_click(viewport:Node, event:InputEvent, shape_idx:int):
+func _on_click(_viewport:Node, event:InputEvent, _shape_idx:int):
 	if (event is InputEventMouseButton or event is InputEventScreenTouch) and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			plock_sound.play()
@@ -42,7 +42,7 @@ func kill():
 	var _particle = preload("res://scenes/DeathParticlesBloodExplosion.tscn").instantiate()
 	
 	animation_player.stop()
-	click_area.set_deferred("disabled", true)  # evita múltiplos cliques
+	click_area.set_deferred("disabled", true)
 	set_physics_process(false)
 	
 	await get_tree().create_timer(0.15).timeout
